@@ -1,4 +1,4 @@
-package com.parsdeveloper.shopping.service;
+package com.parsdeveloper.shopping.service.impl;
 
 import com.parsdeveloper.shopping.model.dto.UserDTO;
 import com.parsdeveloper.shopping.model.entity.DAOUser;

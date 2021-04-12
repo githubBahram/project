@@ -1,7 +1,7 @@
 package com.parsdeveloper.shopping.controller;
 
 import com.parsdeveloper.shopping.model.dto.BrandDTO;
-import com.parsdeveloper.shopping.service.BrandService;
+import com.parsdeveloper.shopping.service.api.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

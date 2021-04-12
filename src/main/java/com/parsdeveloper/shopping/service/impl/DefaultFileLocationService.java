@@ -1,9 +1,9 @@
-package com.parsdeveloper.shopping.service;
+package com.parsdeveloper.shopping.service.impl;
 
 import com.parsdeveloper.shopping.model.entity.Image;
 import com.parsdeveloper.shopping.repository.FileStorageRepository;
-import com.parsdeveloper.shopping.repository.FileSystemRepository;
 import com.parsdeveloper.shopping.repository.ImageRepository;
+import com.parsdeveloper.shopping.service.api.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 
 @Service
-public class FileLocationService implements FileStorageService {
+public class DefaultFileLocationService implements FileStorageService {
     @Autowired
     FileStorageRepository fileSystemRepository;
 

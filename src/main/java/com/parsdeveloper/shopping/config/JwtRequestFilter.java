@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.config;
 
-import com.parsdeveloper.shopping.service.JwtUserDetailsService;
+import com.parsdeveloper.shopping.service.impl.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

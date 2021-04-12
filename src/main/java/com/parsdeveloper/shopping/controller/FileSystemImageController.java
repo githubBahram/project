@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.controller;
 
-import com.parsdeveloper.shopping.service.FileLocationService;
+import com.parsdeveloper.shopping.service.impl.FileLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;

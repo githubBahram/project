@@ -5,7 +5,7 @@ import com.parsdeveloper.shopping.model.dto.UserDTO;
 import com.parsdeveloper.shopping.model.entity.DAOUser;
 import com.parsdeveloper.shopping.model.entity.JwtRequest;
 import com.parsdeveloper.shopping.model.entity.JwtResponse;
-import com.parsdeveloper.shopping.service.JwtUserDetailsService;
+import com.parsdeveloper.shopping.service.impl.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

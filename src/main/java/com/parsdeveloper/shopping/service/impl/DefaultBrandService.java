@@ -1,13 +1,14 @@
-package com.parsdeveloper.shopping.service;
+package com.parsdeveloper.shopping.service.impl;
 
 import com.parsdeveloper.shopping.model.dto.BrandDTO;
+import com.parsdeveloper.shopping.service.api.BrandService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BrandServiceImpl implements BrandService {
+public class DefaultBrandService implements BrandService {
 
     @Override
     public List<BrandDTO> fetchAllBrands() {

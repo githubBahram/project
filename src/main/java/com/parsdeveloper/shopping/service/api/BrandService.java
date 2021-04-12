@@ -1,4 +1,4 @@
-package com.parsdeveloper.shopping.service;
+package com.parsdeveloper.shopping.service.api;
 
 import com.parsdeveloper.shopping.model.dto.BrandDTO;
 

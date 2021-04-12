@@ -1,9 +1,10 @@
-package com.parsdeveloper.shopping.service;
+package com.parsdeveloper.shopping.service.impl;
 
 import com.parsdeveloper.shopping.model.dto.CategoryDTO;
 import com.parsdeveloper.shopping.model.entity.Category;
 import com.parsdeveloper.shopping.model.entity.Image;
 import com.parsdeveloper.shopping.repository.CategoryRepository;
+import com.parsdeveloper.shopping.service.api.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class DefaultCategoryService implements CategoryService {
 
     @Autowired
-    FileLocationService fileLocationService;
+    DefaultFileLocationService fileLocationService;
 
     @Autowired
     CategoryRepository categoryRepository;

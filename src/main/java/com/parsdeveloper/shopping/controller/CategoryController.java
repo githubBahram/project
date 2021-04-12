@@ -2,7 +2,7 @@ package com.parsdeveloper.shopping.controller;
 
 import com.parsdeveloper.shopping.model.dto.CategoryDTO;
 import com.parsdeveloper.shopping.repository.ImageRepository;
-import com.parsdeveloper.shopping.service.CategoryService;
+import com.parsdeveloper.shopping.service.api.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
