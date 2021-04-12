@@ -1,7 +1,6 @@
 package com.parsdeveloper.shopping.repository;
 
-import com.parsdeveloper.shopping.model.entity.Image;
-import org.springframework.data.repository.CrudRepository;
+import com.parsdeveloper.shopping.model.entity.cor.ProductImage;
 
-public interface ImageRepository extends ApplicationRepository<Image> {
+public interface ImageRepository extends ApplicationRepository<ProductImage> {
 }

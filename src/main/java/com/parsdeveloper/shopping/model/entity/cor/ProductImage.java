@@ -1,28 +1,27 @@
-package com.parsdeveloper.shopping.model.entity;
+package com.parsdeveloper.shopping.model.entity.cor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Image {
-    @Id
-    @GeneratedValue
+public class ProductImage {
+
     private Long id;
+    private String location;
+    private String name;
 
-    String location;
-
-    String name;
-
-    public Image(String location, String name) {
+    public ProductImage(String location, String name) {
         this.location = location;
         this.name = name;
     }
 
-    public Image() {
+    public ProductImage() {
 
     }
 
+    @Id
+    @GeneratedValue
     public Long getId() {
         return id;
     }

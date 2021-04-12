@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.model.dto;
 
-import com.parsdeveloper.shopping.model.entity.Category;
+import com.parsdeveloper.shopping.model.entity.shop.Category;
 
 import java.io.Serializable;
 
