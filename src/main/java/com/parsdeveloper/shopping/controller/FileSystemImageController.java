@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.controller;
 
-import com.parsdeveloper.shopping.service.impl.FileLocationService;
+import com.parsdeveloper.shopping.service.api.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
@@ -12,15 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileSystemImageController {
 
     @Autowired
-    FileLocationService fileLocationService;
+    FileStorageService fileStorageService;
 
     @PostMapping("/image")
     Long uploadImage(@RequestBody MultipartFile image) throws Exception {
-        return fileLocationService.save(image.getBytes(), image.getOriginalFilename()).getId();
+        return fileStorageService.save(image.getBytes(), image.getOriginalFilename()).getId();
     }
 
     @GetMapping(value = "/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     FileSystemResource downloadImage(@PathVariable Long imageId) throws Exception {
-        return fileLocationService.find(imageId);
+        return fileStorageService.find(imageId);
     }
 }
