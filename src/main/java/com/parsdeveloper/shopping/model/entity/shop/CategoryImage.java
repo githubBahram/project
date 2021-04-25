@@ -1,24 +1,17 @@
-package com.parsdeveloper.shopping.model.entity.cor;
+package com.parsdeveloper.shopping.model.entity.shop;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class ProductImage {
+@Table(name = "category_image")
+public class CategoryImage {
 
     private Long id;
     private String location;
     private String name;
-
-    public ProductImage(String location, String name) {
-        this.location = location;
-        this.name = name;
-    }
-
-    public ProductImage() {
-
-    }
 
     @Id
     @GeneratedValue

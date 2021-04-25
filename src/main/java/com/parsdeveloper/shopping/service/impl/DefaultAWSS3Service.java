@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class DefaultAWSS3Service implements AWSS3Service {
@@ -49,7 +50,8 @@ public class DefaultAWSS3Service implements AWSS3Service {
 	}
 
 	private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
-		final File file = new File(multipartFile.getOriginalFilename());
+		String uuid= UUID.randomUUID().toString();
+		final File file = new File(multipartFile.getOriginalFilename()+uuid);
 		try (final FileOutputStream outputStream = new FileOutputStream(file)) {
 			outputStream.write(multipartFile.getBytes());
 		} catch (final IOException ex) {

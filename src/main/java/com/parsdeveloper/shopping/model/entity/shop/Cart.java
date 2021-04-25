@@ -4,22 +4,18 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "cart")
 public class Cart extends EffectiveModel<Long> {
 
-    private Long id;
     private Integer quantity;
     private String sessionId;
     private Product product;
 
-    @Override
-    @GeneratedValue
+    @Id
+    @Column(unique = true, nullable = false, precision = 19)
     public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
+        return super.getId();
     }
 
     @Column

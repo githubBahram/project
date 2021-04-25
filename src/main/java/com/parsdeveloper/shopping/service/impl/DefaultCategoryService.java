@@ -1,7 +1,8 @@
 package com.parsdeveloper.shopping.service.impl;
 
 import com.parsdeveloper.shopping.model.dto.CategoryDTO;
-import com.parsdeveloper.shopping.model.entity.cor.ProductImage;
+import com.parsdeveloper.shopping.model.entity.shop.CategoryImage;
+import com.parsdeveloper.shopping.model.entity.shop.ProductImage;
 import com.parsdeveloper.shopping.model.entity.shop.Category;
 import com.parsdeveloper.shopping.repository.CategoryRepository;
 import com.parsdeveloper.shopping.service.api.CategoryService;
@@ -34,7 +35,7 @@ public class DefaultCategoryService implements CategoryService {
     @Override
     @Transactional
     public Category save(CategoryDTO categoryDTO) throws IOException {
-        ProductImage image = fileLocationService.save(categoryDTO.getImageFile(), categoryDTO.getImageName());
+        CategoryImage image = new CategoryImage();
         Category category = new Category();
         category.setImage(image);
         category.setName(categoryDTO.getName());

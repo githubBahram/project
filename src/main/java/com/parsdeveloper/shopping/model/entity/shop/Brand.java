@@ -1,17 +1,15 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "order_status")
-public class OrderStatus {
+@Table(name = "brand")
+public class Brand {
 
     private Long id;
     private String code;
     private String name;
+    private BrandImage image;
 
     @Id
     @GeneratedValue
@@ -23,6 +21,7 @@ public class OrderStatus {
         this.id = id;
     }
 
+    @Column
     public String getCode() {
         return code;
     }
@@ -31,11 +30,22 @@ public class OrderStatus {
         this.code = code;
     }
 
+    @Column
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    public BrandImage getImage() {
+        return image;
+    }
+
+    public void setImage(BrandImage image) {
+        this.image = image;
     }
 }

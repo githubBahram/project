@@ -1,6 +1,5 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
-import com.parsdeveloper.shopping.model.entity.cor.ProductImage;
 import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 
 import javax.persistence.*;
@@ -11,7 +10,8 @@ public class Category extends EffectiveModel<Long> {
 
     private Long id;
     private String name;
-    private ProductImage image;
+    private CategoryImage image;
+    private Category root;
     private Category parent;
     private String description;
 
@@ -23,6 +23,16 @@ public class Category extends EffectiveModel<Long> {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "root_id")
+    public Category getRoot() {
+        return root;
+    }
+
+    public void setRoot(Category root) {
+        this.root = root;
     }
 
     @ManyToOne
@@ -46,11 +56,11 @@ public class Category extends EffectiveModel<Long> {
 
     @OneToOne
     @JoinColumn(name = "image_id", referencedColumnName = "id")
-    public ProductImage getImage() {
+    public CategoryImage getImage() {
         return image;
     }
 
-    public void setImage(ProductImage image) {
+    public void setImage(CategoryImage image) {
         this.image = image;
     }
 

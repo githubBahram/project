@@ -1,5 +1,12 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "order_details")
 public class OrderDetails {
     private Long id;
     private Long price;
@@ -8,6 +15,8 @@ public class OrderDetails {
     private Product product;
     private Order order;
 
+    @Id
+    @GeneratedValue
     public Long getId() {
         return id;
     }

@@ -6,11 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "order_status")
-public class OrderStatus {
+@Table(name = "product_image")
+public class ProductImage {
 
     private Long id;
-    private String code;
+    private String location;
     private String name;
 
     @Id
@@ -23,12 +23,12 @@ public class OrderStatus {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getName() {

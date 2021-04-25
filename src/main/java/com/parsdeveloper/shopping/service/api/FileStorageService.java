@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.service.api;
 
-import com.parsdeveloper.shopping.model.entity.cor.ProductImage;
+import com.parsdeveloper.shopping.model.entity.shop.ProductImage;
 import org.springframework.core.io.FileSystemResource;
 
 public interface FileStorageService {

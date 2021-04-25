@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.service.impl;
 
-import com.parsdeveloper.shopping.model.entity.cor.ProductImage;
+import com.parsdeveloper.shopping.model.entity.shop.ProductImage;
 import com.parsdeveloper.shopping.repository.FileStorageRepository;
 import com.parsdeveloper.shopping.repository.ImageRepository;
 import com.parsdeveloper.shopping.service.api.FileStorageService;
@@ -23,7 +23,7 @@ public class DefaultFileLocationService implements FileStorageService {
     public ProductImage save(byte[] bytes, String imageName) throws IOException {
         String location = fileSystemRepository.save(bytes, imageName);
 
-        return imageRepository.save(new ProductImage(location, imageName));
+        return imageRepository.save(new ProductImage());
     }
 
     public FileSystemResource find(Long imageId) {

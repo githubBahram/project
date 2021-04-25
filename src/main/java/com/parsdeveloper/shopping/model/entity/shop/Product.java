@@ -1,10 +1,11 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
-import com.parsdeveloper.shopping.model.entity.cor.ProductImage;
 import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name = "product")
 public class Product extends EffectiveModel<Long> {
 
     private Long id;
@@ -15,7 +16,8 @@ public class Product extends EffectiveModel<Long> {
     private ProductImage image;
     private Category category;
 
-    @Column
+    @Id
+    @GeneratedValue
     public Long getId() {
         return id;
     }
