@@ -11,16 +11,18 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("image-management")
 public class FileSystemImageController {
 
-    @Autowired
-    FileStorageService fileStorageService;
+//    @Autowired
+//    FileStorageService fileStorageService;
 
     @PostMapping("/image")
     Long uploadImage(@RequestBody MultipartFile image) throws Exception {
-        return fileStorageService.save(image.getBytes(), image.getOriginalFilename()).getId();
+//        return fileStorageService.save(image.getBytes(), image.getOriginalFilename()).getId();
+        return null;
     }
 
     @GetMapping(value = "/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
     FileSystemResource downloadImage(@PathVariable Long imageId) throws Exception {
-        return fileStorageService.find(imageId);
+//        return fileStorageService.find(imageId);
+        return null;
     }
 }
