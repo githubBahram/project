@@ -11,7 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "ADDRESS", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "ADDRESS")
 
 public class Address extends EffectiveModel<Long> {
 

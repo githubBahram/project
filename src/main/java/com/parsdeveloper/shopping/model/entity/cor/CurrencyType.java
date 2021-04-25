@@ -7,7 +7,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CURRENCY_TYPE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "CURRENCY_TYPE")
 
 public class CurrencyType extends EffectiveModel<Long> implements CodeEnabled {
 

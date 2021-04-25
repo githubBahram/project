@@ -7,7 +7,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "UNIT_STATUS", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "UNIT_STATUS")
 public class UnitStatus extends EffectiveModel<Long> implements CodeEnabled {
 
     public static final Long ACTIVE_UNIT_STATE = 1L;

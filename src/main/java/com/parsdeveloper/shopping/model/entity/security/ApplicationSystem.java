@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "APPLICATION_SYSTEM", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "APPLICATION_SYSTEM")
 public class ApplicationSystem extends AuditModel<Long> implements CodeEnabled {
 
     public static final String APPLICATION_SYS_FETCH_PROFILE = "applicationSystemFetchProfile";

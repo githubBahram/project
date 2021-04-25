@@ -8,7 +8,7 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "GENDER_TYPE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "GENDER_TYPE")
 public class GenderType extends BaseModel<Long> implements CodeEnabled {
 
     private String code;

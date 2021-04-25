@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "PERSON_UNIT", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "PERSON_UNIT")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PersonUnit extends EffectiveModel<Long> implements CodeEnabled {
 
@@ -61,7 +61,7 @@ public class PersonUnit extends EffectiveModel<Long> implements CodeEnabled {
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "PERSON_UNIT_ADDRESS", schema = ApplicationSchema.APPLICATION_SCHEMA,
+    @JoinTable(name = "PERSON_UNIT_ADDRESS",
             joinColumns = {@JoinColumn(name = "PERSON_UNIT_ID", nullable = false)}
             , inverseJoinColumns = {@JoinColumn(name = "ADDRESS_ID", nullable = false)})
     public List<Address> getAddresses() {

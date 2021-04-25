@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "BANK", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "BANK")
 public class Bank extends EffectiveModel<Long> implements CodeEnabled {
 
     private String code;

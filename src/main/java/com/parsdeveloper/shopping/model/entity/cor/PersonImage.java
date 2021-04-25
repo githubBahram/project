@@ -6,7 +6,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PERSON_IMAGE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "PERSON_IMAGE")
 public class PersonImage extends EffectiveModel<Long> {
 
     public final static String DEFAULT_FORMAT = "image/png";

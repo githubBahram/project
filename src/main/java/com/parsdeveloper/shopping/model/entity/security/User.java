@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "APPLICATION_USER", schema = ApplicationSchema.APPLICATION_SCHEMA,
+@Table(name = "APPLICATION_USER",
         uniqueConstraints = @UniqueConstraint(name = "APPLICATION_USER_UK", columnNames = "USER_NAME")
 )
 

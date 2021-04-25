@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "ZONE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "ZONE")
 public class Zone extends EffectiveModel<Long> implements CodeEnabled {
 
     private String code;

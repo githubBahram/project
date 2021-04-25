@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "NATURAL_PERSON", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "NATURAL_PERSON")
 @DiscriminatorValue(value = "1")
 @PrimaryKeyJoinColumn(referencedColumnName = "ID")
 public class NaturalPerson extends Person {

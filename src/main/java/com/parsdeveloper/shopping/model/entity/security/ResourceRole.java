@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "RESOURCE_ROLE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "RESOURCE_ROLE")
 public class ResourceRole extends AuditModel<Long> {
 
     private ApplicationRole applicationRole;

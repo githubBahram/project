@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "CHANGE_PASSWORD_HISTORY", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "CHANGE_PASSWORD_HISTORY")
 
 public class ChangePasswordHistory extends AuditModel<Long> {
 

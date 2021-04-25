@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "POSITION_TYPE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "POSITION_TYPE")
 public class PositionType extends EffectiveModel<Long> implements CodeEnabled {
 
     private String code;
@@ -62,7 +62,7 @@ public class PositionType extends EffectiveModel<Long> implements CodeEnabled {
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "POSITION_ROLE", schema = ApplicationSchema.APPLICATION_SCHEMA,
+    @JoinTable(name = "POSITION_ROLE",
             joinColumns = {@JoinColumn(name = "POSITION_TYPE_ID", nullable = false)}
             , inverseJoinColumns = {@JoinColumn(name = "APPLICATION_ROLE_ID", nullable = false)})
     public List<ApplicationRole> getApplicationRoleList() {

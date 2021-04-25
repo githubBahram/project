@@ -7,7 +7,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CONTACT_TYPE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "CONTACT_TYPE")
 
 public class ContactType extends EffectiveModel<Long> implements CodeEnabled {
 

@@ -6,7 +6,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "BANK_ACCOUNT", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "BANK_ACCOUNT")
 
 public class BankAccount extends EffectiveModel<Long> {
 

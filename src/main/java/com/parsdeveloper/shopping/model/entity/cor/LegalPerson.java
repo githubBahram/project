@@ -9,7 +9,7 @@ import javax.validation.groups.Default;
 import java.util.Date;
 
 @Entity
-@Table(name = "LEGAL_PERSON", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "LEGAL_PERSON")
 
 @DiscriminatorValue(value = "2")
 @PrimaryKeyJoinColumn(referencedColumnName = "ID")

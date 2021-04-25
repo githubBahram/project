@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "APPLICATION_ROLE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "APPLICATION_ROLE")
 public class ApplicationRole extends AuditModel<Long> {
 
     private String code;
@@ -95,7 +95,7 @@ public class ApplicationRole extends AuditModel<Long> {
     }
 
     @ManyToMany
-    @JoinTable(name = "RESOURCE_ROLE", schema = ApplicationSchema.APPLICATION_SCHEMA,
+    @JoinTable(name = "RESOURCE_ROLE",
             joinColumns = @JoinColumn(name = "APPLICATION_ROLE_ID"),
             inverseJoinColumns = @JoinColumn(name = "APPLICATION_RESOURCE_ID"))
     public List<ApplicationResource> getApplicationResourceList() {

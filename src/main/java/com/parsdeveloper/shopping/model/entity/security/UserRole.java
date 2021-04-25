@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "USER_ROLE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "USER_ROLE")
 public class UserRole extends AuditModel<Long> {
 
     private User user;

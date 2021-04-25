@@ -6,7 +6,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CONTACT", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "CONTACT")
 public class Contact extends EffectiveModel<Long> {
 
     private String contactValue;

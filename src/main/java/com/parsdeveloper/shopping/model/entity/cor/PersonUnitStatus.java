@@ -6,7 +6,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PERSON_UNIT_STATUS", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "PERSON_UNIT_STATUS")
 public class PersonUnitStatus extends EffectiveModel<Long> {
 
     private PersonUnit personUnit;

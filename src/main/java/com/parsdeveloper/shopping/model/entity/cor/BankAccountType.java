@@ -7,7 +7,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "BANK_ACCOUNT_TYPE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "BANK_ACCOUNT_TYPE")
 public class BankAccountType extends EffectiveModel<Long> implements CodeEnabled {
 
     private String code;

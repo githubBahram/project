@@ -8,7 +8,7 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "LEGAL_TYPE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "LEGAL_TYPE")
 public class LegalType extends EffectiveModel<Long> implements CodeEnabled {
 
     private String code;

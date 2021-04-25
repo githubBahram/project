@@ -7,7 +7,7 @@ import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "POSITION_ROLE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "POSITION_ROLE")
 public class PositionRole extends EffectiveModel<Long> {
 
     private ApplicationRole applicationRole;

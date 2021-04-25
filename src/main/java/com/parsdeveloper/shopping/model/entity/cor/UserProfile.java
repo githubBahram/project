@@ -7,7 +7,7 @@ import com.parsdeveloper.shopping.model.entity.security.User;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER_PROFILE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "USER_PROFILE")
 public class UserProfile extends EffectiveModel<Long> {
 
     private User user;

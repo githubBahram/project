@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "APPLICATION_RESOURCE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "APPLICATION_RESOURCE")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ApplicationResource extends AuditModel<Long> {
 

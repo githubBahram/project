@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 
-@Table(name = "UNIT_POSITION_TYPE", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "UNIT_POSITION_TYPE")
 
 public class UnitPositionType extends EffectiveModel<Long> {
 

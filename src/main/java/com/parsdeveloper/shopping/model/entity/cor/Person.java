@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "PERSON", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "PERSON")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.INTEGER, name = "PERSON_TYPE_ID")
 @JsonTypeInfo(

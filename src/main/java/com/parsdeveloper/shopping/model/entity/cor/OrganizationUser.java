@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "ORGANIZATION_USER", schema = ApplicationSchema.APPLICATION_SCHEMA)
+@Table(name = "ORGANIZATION_USER")
 public class OrganizationUser extends EffectiveModel<Long> {
 
     private Person person;
