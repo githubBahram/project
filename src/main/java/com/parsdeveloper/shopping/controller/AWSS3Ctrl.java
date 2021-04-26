@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping(value= "/s3")
+@RequestMapping(value= "/file")
 public class AWSS3Ctrl {
 
 	@Autowired
@@ -17,8 +17,8 @@ public class AWSS3Ctrl {
 
 	@PostMapping(value= "/upload")
 	public ResponseEntity<String> uploadFile(@RequestPart(value= "file") final MultipartFile multipartFile) {
-		service.uploadFile(multipartFile);
-		final String response = "[" + multipartFile.getOriginalFilename() + "] uploaded successfully.";
+		String fileName=service.uploadFile(multipartFile);
+		final String response = fileName;
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

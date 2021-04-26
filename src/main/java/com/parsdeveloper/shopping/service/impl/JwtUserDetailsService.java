@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.service.impl;
 
-import com.parsdeveloper.shopping.model.dto.UserDTO;
+import com.parsdeveloper.shopping.model.dto.UserDto;
 import com.parsdeveloper.shopping.model.entity.DAOUser;
 import com.parsdeveloper.shopping.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                 new ArrayList<>());
     }
 
-    public DAOUser save(UserDTO user) {
+    public DAOUser save(UserDto user) {
         DAOUser newUser = new DAOUser();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));

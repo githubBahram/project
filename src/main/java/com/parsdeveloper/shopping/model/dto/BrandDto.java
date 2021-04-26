@@ -1,11 +1,11 @@
 package com.parsdeveloper.shopping.model.dto;
 
-public class BrandDTO {
+public class BrandDto {
     private Long id;
     private String name;
     private String imageUrl;
 
-    public BrandDTO(Long id, String name, String imageUrl) {
+    public BrandDto(Long id, String name, String imageUrl) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;

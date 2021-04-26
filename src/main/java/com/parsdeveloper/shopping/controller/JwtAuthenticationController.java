@@ -1,7 +1,7 @@
 package com.parsdeveloper.shopping.controller;
 
 import com.parsdeveloper.shopping.config.JwtTokenUtil;
-import com.parsdeveloper.shopping.model.dto.UserDTO;
+import com.parsdeveloper.shopping.model.dto.UserDto;
 import com.parsdeveloper.shopping.model.entity.DAOUser;
 import com.parsdeveloper.shopping.model.entity.JwtRequest;
 import com.parsdeveloper.shopping.model.entity.JwtResponse;
@@ -33,7 +33,7 @@ public class JwtAuthenticationController {
     private JwtUserDetailsService userDetailsService;
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> register(@RequestBody UserDto userDTO) {
         String token;
         try {
             final UserDetails userDetails = userDetailsService

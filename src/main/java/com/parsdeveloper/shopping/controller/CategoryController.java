@@ -1,41 +1,33 @@
 package com.parsdeveloper.shopping.controller;
 
-import com.parsdeveloper.shopping.model.dto.CategoryDTO;
-import com.parsdeveloper.shopping.repository.ImageRepository;
+import com.parsdeveloper.shopping.model.dto.CategoryDto;
+import com.parsdeveloper.shopping.model.entity.shop.Category;
 import com.parsdeveloper.shopping.service.api.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
-@RequestMapping("category-management")
+@RequestMapping("categories")
 public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
 
-    @Autowired
-    ImageRepository imageRepository;
-
-    @GetMapping(value = "/categories", produces = "application/json")
-    public List<CategoryDTO> categoryDTOList() {
-        return categoryService.findAll();
+    @GetMapping
+    protected ResponseEntity findAll(Pageable pageable) {
+        Page<Category> all = categoryService.findAll(pageable);
+        return ResponseEntity.ok(all);
     }
 
-    @PostMapping(value = "/category")
-    public ResponseEntity<String> save(@RequestBody MultipartFile image,
-                                         String name) {
-        try {
-            CategoryDTO categoryDTO=new CategoryDTO(name,image.getBytes(), image.getOriginalFilename());
-            categoryService.save(categoryDTO);
-        } catch (IOException e) {
-            //todo log for exception
-        }
-
+    @PostMapping(value = "/add")
+    public ResponseEntity<String> save(@RequestBody MultipartFile image, CategoryDto categoryDto) throws IOException {
+        categoryService.save(image,categoryDto);
         return ResponseEntity.ok("success");
     }
 }

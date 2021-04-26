@@ -1,6 +1,6 @@
 package com.parsdeveloper.shopping.model.dto;
 
-public class UserDTO {
+public class UserDto {
     private String username;
     private String password;
 
