@@ -3,15 +3,14 @@ package com.parsdeveloper.shopping.model.entity.shop;
 import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "product")
-public class Product extends EffectiveModel<Long> {
+public class Product  implements Serializable {
 
     private Long id;
     private String name;
-    private Long price;
-    private Integer quantity;
     private String Description;
     private ProductImage image;
     private Category category;
@@ -33,24 +32,6 @@ public class Product extends EffectiveModel<Long> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Column
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    @Column
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 
     @Column

@@ -1,10 +1,11 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "brand")
-public class Brand {
+public class Brand  implements Serializable {
 
     private Long id;
     private String code;

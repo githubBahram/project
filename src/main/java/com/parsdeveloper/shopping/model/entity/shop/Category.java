@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category  implements Serializable {
 
     private Long id;
     private String name;

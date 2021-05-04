@@ -1,9 +1,6 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "order_details")
@@ -49,6 +46,8 @@ public class OrderDetails {
         this.sku = sku;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_ID")
     public Product getProduct() {
         return product;
     }
