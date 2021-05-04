@@ -58,7 +58,8 @@ public class DefaultAWSS3Service implements AWSS3Service {
 
     private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
         String uuid = UUID.randomUUID().toString();
-        final File file = new File(multipartFile.getOriginalFilename() + uuid);
+        final File file = new File(multipartFile.getOriginalFilename().split("\\.")[0] +
+                uuid.split("-")[4] + "." + multipartFile.getContentType().split("/")[1]);
         try (final FileOutputStream outputStream = new FileOutputStream(file)) {
             outputStream.write(multipartFile.getBytes());
         } catch (final IOException ex) {
@@ -68,7 +69,7 @@ public class DefaultAWSS3Service implements AWSS3Service {
     }
 
     private String uploadFileToS3Bucket(final String bucketName, final File file) {
-        final String uniqueFileName = LocalDateTime.now() + "_" + file.getName();
+        final String uniqueFileName = file.getName();
         LOGGER.info("Uploading file with name= " + uniqueFileName);
         final PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, uniqueFileName, file);
         amazonS3.putObject(putObjectRequest);

@@ -1,6 +1,7 @@
 package com.parsdeveloper.shopping.model.dto;
 
 import com.parsdeveloper.shopping.model.entity.shop.Category;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ public class CategoryDto implements Serializable {
     private Long rootId;
     private Long parentId;
     private String description;
+    private MultipartFile image;
 
 
     public Long getId() {
@@ -69,5 +71,13 @@ public class CategoryDto implements Serializable {
         categoryDto.setId(category.getId());
         categoryDto.setDescription(category.getDescription());
         return categoryDto;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 }

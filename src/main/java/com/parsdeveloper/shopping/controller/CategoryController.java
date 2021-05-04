@@ -25,9 +25,9 @@ public class CategoryController {
         return ResponseEntity.ok(all);
     }
 
-    @PostMapping(value = "/add")
-    public ResponseEntity<String> save(@RequestBody MultipartFile image, CategoryDto categoryDto) throws IOException {
-        categoryService.save(image,categoryDto);
-        return ResponseEntity.ok("success");
+    @PostMapping
+    public ResponseEntity<Category> save(CategoryDto categoryDto) throws IOException {
+        Category category=categoryService.save(categoryDto);
+        return ResponseEntity.ok(category);
     }
 }

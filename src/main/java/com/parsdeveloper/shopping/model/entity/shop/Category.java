@@ -1,12 +1,13 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "category")
-public class Category extends EffectiveModel<Long> {
+public class Category {
 
     private Long id;
     private String name;
@@ -26,6 +27,7 @@ public class Category extends EffectiveModel<Long> {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "root_id")
     public Category getRoot() {
         return root;
@@ -36,6 +38,7 @@ public class Category extends EffectiveModel<Long> {
     }
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "parent_id")
     public Category getParent() {
         return parent;

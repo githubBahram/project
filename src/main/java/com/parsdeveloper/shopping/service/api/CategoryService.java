@@ -12,5 +12,5 @@ public interface CategoryService {
 
     Page<Category> findAll(Pageable pageable);
 
-    Category save(MultipartFile image,CategoryDto categoryDto) throws IOException;
+    Category save(CategoryDto categoryDto) throws IOException;
 }
