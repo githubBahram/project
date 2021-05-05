@@ -7,25 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
 @RestController
-@RequestMapping("categories")
+@RequestMapping("/categoryManager")
 public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping
+    @GetMapping("/categories")
     protected ResponseEntity findAll(Pageable pageable) {
         Page<Category> all = categoryService.findAll(pageable);
         return ResponseEntity.ok(all);
     }
 
-    @PostMapping
+    @PostMapping("/category")
     public ResponseEntity<Category> save(CategoryDto categoryDto) throws IOException {
         Category category=categoryService.save(categoryDto);
         return ResponseEntity.ok(category);
