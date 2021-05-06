@@ -2,9 +2,7 @@ package com.parsdeveloper.shopping.service.impl;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.parsdeveloper.shopping.service.api.AWSS3Service;
 import org.slf4j.Logger;
@@ -71,9 +69,16 @@ public class DefaultAWSS3Service implements AWSS3Service {
     private String uploadFileToS3Bucket(final String bucketName, final File file) {
         final String uniqueFileName = file.getName();
         LOGGER.info("Uploading file with name= " + uniqueFileName);
-        final PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, uniqueFileName, file);
+        final PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, uniqueFileName, file)
+                .withCannedAcl(CannedAccessControlList.PublicRead);
         amazonS3.putObject(putObjectRequest);
         return uniqueFileName;
+
+        /*PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, keyName, image);
+       AccessControlList acl = new AccessControlList();
+       acl.grantPermission(GroupGrantee.AllUsers, Permission.Read); //all users or authenticated
+       putObjectRequest.setAccessControlList(acl);
+       s3client.putObject(putObjectRequest);*/
     }
 
     /**
