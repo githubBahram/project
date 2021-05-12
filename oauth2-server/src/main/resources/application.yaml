@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: oauth2-server
+
+logging:
+  level:
+    org.spring.framework.web: debug
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    enabled: false
+    fetch-registry: false
+
+com:
+  oauth2:
+    client-id: test
+    client-secret: test
+    client-scopes: read,write
+    key-size: 1024
+    key-id: AF2IJS23FJS
