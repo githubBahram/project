@@ -56,7 +56,7 @@ public class DefaultProductService implements ProductService {
 
         Product product = new Product();
         product.setCategory(category.get());
-        product.setImage(productImage);
+//        product.setImage(productImage);
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product=productRepository.save(product);

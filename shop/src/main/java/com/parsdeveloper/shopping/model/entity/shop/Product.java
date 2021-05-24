@@ -1,9 +1,8 @@
 package com.parsdeveloper.shopping.model.entity.shop;
 
-import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -11,9 +10,11 @@ public class Product  implements Serializable {
 
     private Long id;
     private String name;
+    private String fixName;
     private String Description;
-    private ProductImage image;
+    private List<ProductImage> imageList;
     private Category category;
+    private Brand brand;
 
     @Id
     @GeneratedValue
@@ -35,6 +36,15 @@ public class Product  implements Serializable {
     }
 
     @Column
+    public String getFixName() {
+        return fixName;
+    }
+
+    public void setFixName(String fixName) {
+        this.fixName = fixName;
+    }
+
+    @Column
     public String getDescription() {
         return Description;
     }
@@ -43,14 +53,14 @@ public class Product  implements Serializable {
         Description = description;
     }
 
-    @OneToOne
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    public ProductImage getImage() {
-        return image;
+
+    @OneToMany(mappedBy = "product")
+    public List<ProductImage> getImageList() {
+        return imageList;
     }
 
-    public void setImage(ProductImage image) {
-        this.image = image;
+    public void setImageList(List<ProductImage> imageList) {
+        this.imageList = imageList;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,5 +71,15 @@ public class Product  implements Serializable {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BRAND_ID", nullable = false)
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 }

@@ -2,6 +2,7 @@ package com.parsdeveloper.shopping.controller;
 
 import com.parsdeveloper.shopping.model.dto.ProductDto;
 import com.parsdeveloper.shopping.model.entity.shop.Product;
+import com.parsdeveloper.shopping.service.api.ImportDataService;
 import com.parsdeveloper.shopping.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,8 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    ImportDataService importDataService;
 
     @GetMapping("/products")
     protected ResponseEntity findAll(Pageable pageable) {
@@ -31,5 +34,11 @@ public class ProductController {
     public ResponseEntity<Product> save(ProductDto productDto) throws IOException {
         Product product=productService.save(productDto);
         return ResponseEntity.ok(product);
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<Product> importData() throws IOException {
+        importDataService.importData();
+        return ResponseEntity.ok(new Product());
     }
 }

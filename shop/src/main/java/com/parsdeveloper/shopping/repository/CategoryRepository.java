@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface CategoryRepository extends ApplicationRepository<Category> {
 
     Page<Category> findAll(Pageable pageable);
+
+    Category findCategoryByFixName(String fixName);
 }

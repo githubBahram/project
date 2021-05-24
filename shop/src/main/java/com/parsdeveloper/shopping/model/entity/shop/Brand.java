@@ -10,6 +10,7 @@ public class Brand  implements Serializable {
     private Long id;
     private String code;
     private String name;
+    private String fixName;
     private BrandImage image;
 
     @Id
@@ -38,6 +39,15 @@ public class Brand  implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Column
+    public String getFixName() {
+        return fixName;
+    }
+
+    public void setFixName(String fixName) {
+        this.fixName = fixName;
     }
 
     @OneToOne

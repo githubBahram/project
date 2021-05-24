@@ -93,7 +93,7 @@ public class ProductDto implements Serializable {
         ProductDto productDto = new ProductDto();
         productDto.setCategoryId(product.getCategory().getId());
         productDto.setCategoryName(product.getCategory().getName());
-        productDto.setImageId(product.getImage().getId());
+//        productDto.setImageId(product.getImage().getId());
         productDto.setName(product.getName());
         productDto.setId(product.getId());
         productDto.setDescription(product.getDescription());
