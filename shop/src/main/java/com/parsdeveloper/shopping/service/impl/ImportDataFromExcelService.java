@@ -9,18 +9,26 @@ import com.parsdeveloper.shopping.repository.BrandRepository;
 import com.parsdeveloper.shopping.repository.CategoryRepository;
 import com.parsdeveloper.shopping.repository.ProductImageRepository;
 import com.parsdeveloper.shopping.repository.ProductRepository;
+import com.parsdeveloper.shopping.service.api.AWSS3Service;
 import com.parsdeveloper.shopping.service.api.ImportDataService;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +43,8 @@ public class ImportDataFromExcelService implements ImportDataService {
     private ProductRepository productRepository;
     @Autowired
     private ProductImageRepository productImageRepository;
+    @Autowired
+    private AWSS3Service awss3Service;
 
     @Override
     @Transactional
@@ -94,23 +104,27 @@ public class ImportDataFromExcelService implements ImportDataService {
                     Product product=new Product();
                     product.setCategory(category);
                     product.setBrand(brand);
+                    product.setBarcode(productExcelDto.getBarcode());
                     product.setName(productExcelDto.getProductName());
                     product.setFixName(productFixName);
                     product=productRepository.save(product);
 
-                    if(!productExcelDto.getImage1().trim().equals("")){
+                    if(!productExcelDto.getImage1().trim().equals("") &&
+                    uploadImageFile(productExcelDto.getImage1())){
                         ProductImage productImage=new ProductImage();
                         productImage.setLocation(productExcelDto.getImage1());
                         productImage.setProduct(product);
                         productImageRepository.save(productImage);
                     }
-                    if(!productExcelDto.getImage2().trim().equals("")){
+                    if(!productExcelDto.getImage2().trim().equals("") &&
+                            uploadImageFile(productExcelDto.getImage2())){
                         ProductImage productImage=new ProductImage();
                         productImage.setLocation(productExcelDto.getImage2());
                         productImage.setProduct(product);
                         productImageRepository.save(productImage);
                     }
-                    if(!productExcelDto.getImage3().trim().equals("")){
+                    if(!productExcelDto.getImage3().trim().equals("") &&
+                            uploadImageFile(productExcelDto.getImage3())){
                         ProductImage productImage=new ProductImage();
                         productImage.setLocation(productExcelDto.getImage3());
                         productImage.setProduct(product);
@@ -125,5 +139,22 @@ public class ImportDataFromExcelService implements ImportDataService {
             e.printStackTrace();
         }
 
+    }
+
+    private boolean uploadImageFile(String fileName){
+        if(fileName.trim().equals("")){
+            return false;
+        }
+        try {
+            File file = new File("D:\\shop1\\shop\\src\\main\\resources\\" + fileName);
+            FileInputStream input = new FileInputStream(file);
+            MultipartFile multipartFile = new MockMultipartFile("file",
+                    file.getName(), "jpg/plain", IOUtils.toByteArray(input));
+            awss3Service.uploadFile(multipartFile);
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

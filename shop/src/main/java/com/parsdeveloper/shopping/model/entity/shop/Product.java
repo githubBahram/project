@@ -11,6 +11,7 @@ public class Product  implements Serializable {
     private Long id;
     private String name;
     private String fixName;
+    private String barcode;
     private String Description;
     private List<ProductImage> imageList;
     private Category category;
@@ -42,6 +43,15 @@ public class Product  implements Serializable {
 
     public void setFixName(String fixName) {
         this.fixName = fixName;
+    }
+
+    @Column
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     @Column
