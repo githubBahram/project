@@ -66,69 +66,75 @@ public class ImportDataFromExcelService implements ImportDataService {
                 try {
                     productExcelDto = new ProductExcelDto(row);
 
-                    String brandFixName= productExcelDto.getBrandName().replaceAll("[\\s]+","");
-                    Brand brand=brandRepository.findBrandByFixName(brandFixName);
-                    if(brand==null){
-                        brand=new Brand();
+                    String brandFixName = productExcelDto.getBrandName().replaceAll("[\\s]+", "");
+                    Brand brand = brandRepository.findBrandByFixName(brandFixName);
+                    if (brand == null) {
+                        brand = new Brand();
                         brand.setName(productExcelDto.getBrandName());
                         brand.setFixName(brandFixName);
-                        brand=brandRepository.save(brand);
+                        brand = brandRepository.save(brand);
                     }
 
-                    String categoryParentFixName=productExcelDto.getParentCategory().replaceAll("[\\s]+","");
-                    Category categoryParent=categoryRepository.findCategoryByFixName(categoryParentFixName);
-                    if(categoryParent==null){
-                        categoryParent=new Category();
+                    String categoryParentFixName = productExcelDto.getParentCategory().replaceAll("[\\s]+", "");
+                    Category categoryParent = categoryRepository.findCategoryByFixName(categoryParentFixName);
+                    if (categoryParent == null) {
+                        categoryParent = new Category();
                         categoryParent.setName(productExcelDto.getParentCategory());
                         categoryParent.setFixName(categoryParentFixName);
-                        categoryParent=categoryRepository.save(categoryParent);
+                        categoryParent = categoryRepository.save(categoryParent);
 
                         categoryParent.setRoot(categoryParent);
                         categoryParent.setParent(categoryParent);
 
-                        categoryParent=categoryRepository.save(categoryParent);
+                        categoryParent = categoryRepository.save(categoryParent);
                     }
 
-                    String categoryFixName=productExcelDto.getCategory().replaceAll("[\\s]+","");
-                    Category category=categoryRepository.findCategoryByFixName(categoryFixName);
-                    if(category==null){
-                        category=new Category();
+                    String categoryFixName = productExcelDto.getCategory().replaceAll("[\\s]+", "");
+                    Category category = categoryRepository.findCategoryByFixName(categoryFixName);
+                    if (category == null) {
+                        category = new Category();
                         category.setName(productExcelDto.getCategory());
                         category.setFixName(categoryFixName);
                         category.setRoot(categoryParent);
                         category.setParent(categoryParent);
-                        category=categoryRepository.save(category);
+                        category = categoryRepository.save(category);
                     }
 
-                    String productFixName=productExcelDto.getProductName().replaceAll("[\\s]+","");
-                    Product product=new Product();
+                    String productFixName = productExcelDto.getProductName().replaceAll("[\\s]+", "");
+                    Product product = new Product();
                     product.setCategory(category);
                     product.setBrand(brand);
                     product.setBarcode(productExcelDto.getBarcode());
                     product.setName(productExcelDto.getProductName());
                     product.setFixName(productFixName);
-                    product=productRepository.save(product);
+                    product = productRepository.save(product);
 
-                    if(!productExcelDto.getImage1().trim().equals("") &&
-                    uploadImageFile(productExcelDto.getImage1())){
-                        ProductImage productImage=new ProductImage();
-                        productImage.setLocation(productExcelDto.getImage1());
-                        productImage.setProduct(product);
-                        productImageRepository.save(productImage);
+                    if (!productExcelDto.getImage1().trim().equals("")) {
+                        String nameImage = uploadImageFile(productExcelDto.getImage1());
+                        if (nameImage != null) {
+                            ProductImage productImage = new ProductImage();
+                            productImage.setLocation(nameImage);
+                            productImage.setProduct(product);
+                            productImageRepository.save(productImage);
+                        }
                     }
-                    if(!productExcelDto.getImage2().trim().equals("") &&
-                            uploadImageFile(productExcelDto.getImage2())){
-                        ProductImage productImage=new ProductImage();
-                        productImage.setLocation(productExcelDto.getImage2());
-                        productImage.setProduct(product);
-                        productImageRepository.save(productImage);
+                    if (!productExcelDto.getImage2().trim().equals("")) {
+                        String nameImage = uploadImageFile(productExcelDto.getImage2());
+                        if (nameImage != null) {
+                            ProductImage productImage = new ProductImage();
+                            productImage.setLocation(nameImage);
+                            productImage.setProduct(product);
+                            productImageRepository.save(productImage);
+                        }
                     }
-                    if(!productExcelDto.getImage3().trim().equals("") &&
-                            uploadImageFile(productExcelDto.getImage3())){
-                        ProductImage productImage=new ProductImage();
-                        productImage.setLocation(productExcelDto.getImage3());
-                        productImage.setProduct(product);
-                        productImageRepository.save(productImage);
+                    if (!productExcelDto.getImage3().trim().equals("")) {
+                        String nameImage = uploadImageFile(productExcelDto.getImage3());
+                        if (nameImage != null) {
+                            ProductImage productImage = new ProductImage();
+                            productImage.setLocation(nameImage);
+                            productImage.setProduct(product);
+                            productImageRepository.save(productImage);
+                        }
                     }
 
                 } catch (Throwable e) {
@@ -141,20 +147,21 @@ public class ImportDataFromExcelService implements ImportDataService {
 
     }
 
-    private boolean uploadImageFile(String fileName){
-        if(fileName.trim().equals("")){
-            return false;
+    private String uploadImageFile(String fileName) {
+        if (fileName.trim().equals("")) {
+            return null;
         }
+        String fileUploadName;
         try {
             File file = new File("D:\\shop1\\shop\\src\\main\\resources\\" + fileName);
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = new MockMultipartFile("file",
                     file.getName(), "jpg/plain", IOUtils.toByteArray(input));
-            awss3Service.uploadFile(multipartFile);
-        }catch (Exception e){
+            fileUploadName = awss3Service.uploadFile(multipartFile);
+        } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
-        return true;
+        return fileUploadName;
     }
 }
