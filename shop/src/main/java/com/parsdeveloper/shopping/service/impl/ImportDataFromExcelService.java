@@ -16,17 +16,17 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.util.IOUtils;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.Reader;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -157,6 +157,23 @@ public class ImportDataFromExcelService implements ImportDataService {
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = new MockMultipartFile("file",
                     file.getName(), "jpg/plain", IOUtils.toByteArray(input));
+            fileUploadName = awss3Service.uploadFile(multipartFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return fileUploadName;
+    }
+
+    private String uploadThumbnailImageFile(String fileName){
+        if (fileName.trim().equals("")) {
+            return null;
+        }
+        String fileUploadName;
+        try {
+            File file = new File("D:\\shop1\\shop\\src\\main\\resources\\" + fileName);
+            FileInputStream input = new FileInputStream(file);
+            MultipartFile multipartFile = awss3Service.createThumbnail(file,300);
             fileUploadName = awss3Service.uploadFile(multipartFile);
         } catch (Exception e) {
             e.printStackTrace();

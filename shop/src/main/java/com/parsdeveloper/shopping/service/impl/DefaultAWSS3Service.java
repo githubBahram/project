@@ -5,14 +5,19 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import com.parsdeveloper.shopping.service.api.AWSS3Service;
+import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -102,5 +107,25 @@ public class DefaultAWSS3Service implements AWSS3Service {
             LOGGER.info("IO Error Message= " + ex.getMessage());
         }
         return content;
+    }
+
+    public MultipartFile createThumbnail(File file, Integer width) {
+
+        BufferedImage thumbImg = null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try {
+            BufferedImage img = ImageIO.read(file);
+            thumbImg = Scalr.resize(img, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 300, Scalr.OP_ANTIALIAS);
+            ImageIO.write(thumbImg, "jpg", baos);
+            baos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        MultipartFile multipartFileThumb = new MockMultipartFile("file", file.getName() + "Thumbnail",
+                "jpg/plan", baos.toByteArray());
+
+        return multipartFileThumb;
     }
 }
