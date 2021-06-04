@@ -6,10 +6,12 @@ import java.io.File;
 
 public interface AWSS3Service {
 
-    String uploadFile(MultipartFile multipartFile);
+    String uploadFile(MultipartFile multipartFile, String bucketName);
 
-    byte[] downloadFile(String keyName);
+    String uploadFile(MultipartFile multipartFile, String bucketName,String fileName);
 
-    MultipartFile createThumbnail(File file, Integer width);
+    String uploadFileByRandomName(final MultipartFile multipartFile, String bucketName);
+
+    byte[] downloadFile(String keyName, String bucketName);
 
 }

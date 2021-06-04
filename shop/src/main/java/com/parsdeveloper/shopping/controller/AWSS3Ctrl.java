@@ -17,14 +17,14 @@ public class AWSS3Ctrl {
 
 	@PostMapping(value= "/upload")
 	public ResponseEntity<String> uploadFile(@RequestPart(value= "file") final MultipartFile multipartFile) {
-		String fileName=service.uploadFile(multipartFile);
+		String fileName=service.uploadFile(multipartFile,"image-product");
 		final String response = fileName;
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping(value= "/download")
 	public ResponseEntity<ByteArrayResource> downloadFile(@RequestParam(value= "fileName") final String keyName) {
-		final byte[] data = service.downloadFile(keyName);
+		final byte[] data = service.downloadFile(keyName,"image-product");
 		final ByteArrayResource resource = new ByteArrayResource(data);
 		return ResponseEntity
 				.ok()

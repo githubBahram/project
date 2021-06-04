@@ -32,9 +32,6 @@ public class DefaultAWSS3Service implements AWSS3Service {
     @Autowired
     private AmazonS3 amazonS3;
 
-    @Value("${aws.s3.bucket}")
-    private String bucketName;
-
     /**
      * @param multipartFile upload file as multipartFile
      * @return name file as String
@@ -44,7 +41,7 @@ public class DefaultAWSS3Service implements AWSS3Service {
      */
     @Override
     @Async
-    public String uploadFile(final MultipartFile multipartFile) {
+    public String uploadFile(final MultipartFile multipartFile,String bucketName) {
         LOGGER.info("File upload in progress.");
         String fileName = multipartFile.getName();
         try {
@@ -59,9 +56,62 @@ public class DefaultAWSS3Service implements AWSS3Service {
         return fileName;
     }
 
-    private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
+    @Override
+    @Async
+    public String uploadFile(MultipartFile multipartFile, String bucketName,String fileName){
+        LOGGER.info("File upload in progress.");
+        try {
+            final File file = convertMultiPartFileToFile(multipartFile,fileName);
+            fileName = uploadFileToS3Bucket(bucketName, file);
+            LOGGER.info("File upload is completed.");
+            file.delete();
+        } catch (final AmazonServiceException ex) {
+            LOGGER.info("File upload is failed.");
+            LOGGER.error("Error= {} while uploading file.", ex.getMessage());
+        }
+        return fileName;
+    }
+
+    @Override
+    @Async
+    public String uploadFileByRandomName(final MultipartFile multipartFile,String bucketName) {
+        LOGGER.info("File upload in progress.");
+        String fileName = multipartFile.getName();
+        try {
+            final File file = convertMultiPartFileToRandomFile(multipartFile);
+            fileName = uploadFileToS3Bucket(bucketName, file);
+            LOGGER.info("File upload is completed.");
+            file.delete();
+        } catch (final AmazonServiceException ex) {
+            LOGGER.info("File upload is failed.");
+            LOGGER.error("Error= {} while uploading file.", ex.getMessage());
+        }
+        return fileName;
+    }
+
+    private File convertMultiPartFileToRandomFile(final MultipartFile multipartFile) {
         String uuid = UUID.randomUUID().toString();
         final File file = new File(uuid.split("-")[4] + multipartFile.getOriginalFilename());
+        try (final FileOutputStream outputStream = new FileOutputStream(file)) {
+            outputStream.write(multipartFile.getBytes());
+        } catch (final IOException ex) {
+            LOGGER.error("Error converting the multi-part file to file= ", ex.getMessage());
+        }
+        return file;
+    }
+
+    private File convertMultiPartFileToFile(final MultipartFile multipartFile) {
+        final File file = new File(multipartFile.getOriginalFilename());
+        try (final FileOutputStream outputStream = new FileOutputStream(file)) {
+            outputStream.write(multipartFile.getBytes());
+        } catch (final IOException ex) {
+            LOGGER.error("Error converting the multi-part file to file= ", ex.getMessage());
+        }
+        return file;
+    }
+
+    private File convertMultiPartFileToFile(final MultipartFile multipartFile,String fileName) {
+        final File file = new File(fileName);
         try (final FileOutputStream outputStream = new FileOutputStream(file)) {
             outputStream.write(multipartFile.getBytes());
         } catch (final IOException ex) {
@@ -93,7 +143,7 @@ public class DefaultAWSS3Service implements AWSS3Service {
      */
     @Override
     @Async
-    public byte[] downloadFile(final String keyName) {
+    public byte[] downloadFile(final String keyName,String bucketName) {
 
         byte[] content = null;
         LOGGER.info("Downloading an object with key= " + keyName);
@@ -109,23 +159,4 @@ public class DefaultAWSS3Service implements AWSS3Service {
         return content;
     }
 
-    public MultipartFile createThumbnail(File file, Integer width) {
-
-        BufferedImage thumbImg = null;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        try {
-            BufferedImage img = ImageIO.read(file);
-            thumbImg = Scalr.resize(img, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, 300, Scalr.OP_ANTIALIAS);
-            ImageIO.write(thumbImg, "jpg", baos);
-            baos.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        MultipartFile multipartFileThumb = new MockMultipartFile("file", file.getName() + "Thumbnail",
-                "jpg/plan", baos.toByteArray());
-
-        return multipartFileThumb;
-    }
 }

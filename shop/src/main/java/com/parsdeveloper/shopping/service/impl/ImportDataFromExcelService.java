@@ -1,5 +1,6 @@
 package com.parsdeveloper.shopping.service.impl;
 
+import com.parsdeveloper.shopping.model.commons.util.FileUtils;
 import com.parsdeveloper.shopping.model.dto.ProductExcelDto;
 import com.parsdeveloper.shopping.model.entity.shop.Brand;
 import com.parsdeveloper.shopping.model.entity.shop.Category;
@@ -18,6 +19,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.util.IOUtils;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
@@ -34,6 +37,11 @@ import java.util.List;
 
 @Service
 public class ImportDataFromExcelService implements ImportDataService {
+
+    @Value("aws.s3.bucket.image.product")
+    private String imageProductBucketName;
+    @Value("aws.s3.bucket.image.product.thumbnail")
+    private String imageProductThumbnailBucketName;
 
     @Autowired
     private BrandRepository brandRepository;
@@ -49,7 +57,7 @@ public class ImportDataFromExcelService implements ImportDataService {
     @Override
     @Transactional
     public void importData() {
-
+        Long count = 0L;
         FileInputStream excelFile = null;
 
         try {
@@ -111,6 +119,7 @@ public class ImportDataFromExcelService implements ImportDataService {
 
                     if (!productExcelDto.getImage1().trim().equals("")) {
                         String nameImage = uploadImageFile(productExcelDto.getImage1());
+                        uploadThumbnailImageFile(productExcelDto.getImage1(), nameImage);
                         if (nameImage != null) {
                             ProductImage productImage = new ProductImage();
                             productImage.setLocation(nameImage);
@@ -120,6 +129,7 @@ public class ImportDataFromExcelService implements ImportDataService {
                     }
                     if (!productExcelDto.getImage2().trim().equals("")) {
                         String nameImage = uploadImageFile(productExcelDto.getImage2());
+                        uploadThumbnailImageFile(productExcelDto.getImage2(), nameImage);
                         if (nameImage != null) {
                             ProductImage productImage = new ProductImage();
                             productImage.setLocation(nameImage);
@@ -129,6 +139,7 @@ public class ImportDataFromExcelService implements ImportDataService {
                     }
                     if (!productExcelDto.getImage3().trim().equals("")) {
                         String nameImage = uploadImageFile(productExcelDto.getImage3());
+                        uploadThumbnailImageFile(productExcelDto.getImage3(), nameImage);
                         if (nameImage != null) {
                             ProductImage productImage = new ProductImage();
                             productImage.setLocation(nameImage);
@@ -136,8 +147,13 @@ public class ImportDataFromExcelService implements ImportDataService {
                             productImageRepository.save(productImage);
                         }
                     }
+                    count++;
+//                    if (count % 100 == 0) {
+//
+//                    }
 
                 } catch (Throwable e) {
+                    count++;
                     continue;
                 }
             }
@@ -157,7 +173,7 @@ public class ImportDataFromExcelService implements ImportDataService {
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = new MockMultipartFile("file",
                     file.getName(), "jpg/plain", IOUtils.toByteArray(input));
-            fileUploadName = awss3Service.uploadFile(multipartFile);
+            fileUploadName = awss3Service.uploadFileByRandomName(multipartFile, "image-product");
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -165,7 +181,7 @@ public class ImportDataFromExcelService implements ImportDataService {
         return fileUploadName;
     }
 
-    private String uploadThumbnailImageFile(String fileName){
+    private String uploadThumbnailImageFile(String fileName, String uploadName) {
         if (fileName.trim().equals("")) {
             return null;
         }
@@ -173,8 +189,8 @@ public class ImportDataFromExcelService implements ImportDataService {
         try {
             File file = new File("D:\\shop1\\shop\\src\\main\\resources\\" + fileName);
             FileInputStream input = new FileInputStream(file);
-            MultipartFile multipartFile = awss3Service.createThumbnail(file,300);
-            fileUploadName = awss3Service.uploadFile(multipartFile);
+            MultipartFile multipartFile = FileUtils.createImageThumbnail(file, 300);
+            fileUploadName = awss3Service.uploadFile(multipartFile, "image-product-thumbnail", uploadName);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

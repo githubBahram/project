@@ -21,8 +21,8 @@ import java.util.Optional;
 @Service
 public class DefaultCategoryService implements CategoryService {
 
-    @Value("${aws.s3.bucket}")
-    private String bucketName;
+//    @Value("${aws.s3.bucket}")
+//    private String bucketName;
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -44,10 +44,10 @@ public class DefaultCategoryService implements CategoryService {
         Optional<Category> root=categoryRepository.findById(categoryDto.getRootId()==null?-1L:categoryDto.getRootId());
         Optional<Category> parent=categoryRepository.findById(categoryDto.getParentId()==null?-1L:categoryDto.getParentId());
 
-        String imageName=awss3Service.uploadFile(categoryDto.getImage());
+        String imageName=awss3Service.uploadFile(categoryDto.getImage(),"image-product");
 
         CategoryImage categoryImage=new CategoryImage();
-        categoryImage.setLocation(bucketName);
+        categoryImage.setLocation("image-product");
         categoryImage.setName(imageName);
         categoryImage=categoryImageRepository.save(categoryImage);
 

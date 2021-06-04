@@ -22,8 +22,8 @@ import java.util.Optional;
 @Service
 public class DefaultProductService implements ProductService {
 
-    @Value("${aws.s3.bucket}")
-    private String bucketName;
+//    @Value("${aws.s3.bucket}")
+//    private String bucketName;
 
     @Autowired
     ProductRepository productRepository;
@@ -47,10 +47,10 @@ public class DefaultProductService implements ProductService {
 
         Optional<Category> category=categoryRepository.findById(productDto.getCategoryId());
 
-        String imageName=awss3Service.uploadFile(productDto.getImage());
+        String imageName=awss3Service.uploadFile(productDto.getImage(),"image-product");
 
         ProductImage productImage=new ProductImage();
-        productImage.setLocation(bucketName);
+        productImage.setLocation("image-product");
         productImage.setName(imageName);
         productImage=productImageRepository.save(productImage);
 

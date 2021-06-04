@@ -20,8 +20,8 @@ import java.util.Optional;
 @Service
 public class DefaultBrandService implements BrandService {
 
-    @Value("${aws.s3.bucket}")
-    private String bucketName;
+//    @Value("${aws.s3.bucket}")
+//    private String bucketName;
 
     @Autowired
     private BrandRepository brandRepository;
@@ -40,10 +40,10 @@ public class DefaultBrandService implements BrandService {
     @Transactional
     public Brand save(BrandDto brandDto) {
 
-        String imageName=awss3Service.uploadFile(brandDto.getImage());
+        String imageName=awss3Service.uploadFile(brandDto.getImage(),"image-product");
 
         BrandImage brandImage=new BrandImage();
-        brandImage.setLocation(bucketName);
+        brandImage.setLocation("image-product");
         brandImage.setName(imageName);
         brandImage=brandImageRepository.save(brandImage);
 
