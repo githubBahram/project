@@ -10,7 +10,7 @@ public class Cart extends EffectiveModel<Long> {
 
     private Integer quantity;
     private String sessionId;
-    private Product product;
+    private CompanyProduct companyProduct;
 
     @Id
     @Column(unique = true, nullable = false, precision = 19)
@@ -37,12 +37,12 @@ public class Cart extends EffectiveModel<Long> {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false)
-    public Product getProduct() {
-        return product;
+    @JoinColumn(name = "COMPANY_PRODUCT_ID")
+    public CompanyProduct getCompanyProduct() {
+        return companyProduct;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCompanyProduct(CompanyProduct companyProduct) {
+        this.companyProduct = companyProduct;
     }
 }

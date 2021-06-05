@@ -9,7 +9,7 @@ public class OrderDetails {
     private Long price;
     private Integer quantity;
     private String sku;
-    private Product product;
+    private CompanyProduct companyProduct;
     private Order order;
 
     @Id
@@ -47,13 +47,13 @@ public class OrderDetails {
     }
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID")
-    public Product getProduct() {
-        return product;
+    @JoinColumn(name = "COMPANY_PRODUCT_ID")
+    public CompanyProduct getCompanyProduct() {
+        return companyProduct;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCompanyProduct(CompanyProduct companyProduct) {
+        this.companyProduct = companyProduct;
     }
 
     public Order getOrder() {

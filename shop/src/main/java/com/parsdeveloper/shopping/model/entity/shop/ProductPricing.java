@@ -11,7 +11,7 @@ public class ProductPricing extends EffectiveModel<Long> {
     private Long price;
     private Long basePrice;
     private Boolean inActive;
-    private Product product;
+    private CompanyProduct companyProduct;
 
     @Id
     @GeneratedValue
@@ -47,12 +47,12 @@ public class ProductPricing extends EffectiveModel<Long> {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false)
-    public Product getProduct() {
-        return product;
+    @JoinColumn(name = "COMPANY_PRODUCT_ID")
+    public CompanyProduct getCompanyProduct() {
+        return companyProduct;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCompanyProduct(CompanyProduct companyProduct) {
+        this.companyProduct = companyProduct;
     }
 }

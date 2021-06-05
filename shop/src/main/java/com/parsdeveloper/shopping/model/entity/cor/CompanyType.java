@@ -39,17 +39,4 @@ public class CompanyType extends EffectiveModel<Long> implements CodeEnabled {
         this.name = name;
     }
 
-    public enum Code {
-        HCP("HCP"), TPA("TPA"), INSURER("INSURER"), ASSESSOR("ASSESSOR"), POLICYHOLDER("POLICYHOLDER"), BROKER("BROKER");
-
-        private String val;
-
-        Code(String code) {
-            this.val = code;
-        }
-
-        public String getVal() {
-            return this.val;
-        }
-    }
 }
