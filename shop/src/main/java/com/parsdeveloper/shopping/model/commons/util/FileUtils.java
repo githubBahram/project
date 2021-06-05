@@ -1,5 +1,6 @@
 package com.parsdeveloper.shopping.model.commons.util;
 
+import net.coobird.thumbnailator.Thumbnails;
 import org.imgscalr.Scalr;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class FileUtils {
@@ -26,9 +28,17 @@ public class FileUtils {
 
         try {
             BufferedImage img = readImage(file.getPath());
-            thumbImg = Scalr.resize(img, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, width, Scalr.OP_ANTIALIAS);
-            ImageIO.write(thumbImg, "jpg", baos);
-            baos.flush();
+
+            Thumbnails.of(img)
+                    .size(300,300)
+                    .outputQuality(1f)
+                    .outputFormat("JPG")
+                    .toOutputStream(baos);
+
+//            BufferedImage img = readImage(file.getPath());
+//            thumbImg = Scalr.resize(img, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, width, Scalr.OP_ANTIALIAS);
+//            ImageIO.write(thumbImg, "jpg", baos);
+//            baos.flush();
 
             MultipartFile multipartFileThumb = new MockMultipartFile("file", file.getName(),
                     "jpg/plan", baos.toByteArray());
