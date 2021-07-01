@@ -70,7 +70,17 @@ public class DefaultProductService implements ProductService {
     @Override
     @Transactional
     public List<ProductDto> findProductByCompanyAndCategory(Long companyId, Long categoryId, Pageable pageable) {
-        List<Object[]> productList = productRepository.findProductByCompanyAndCategory(companyId, categoryId, pageable);
-         return null;
+        List<ProductRepository.ProductMapper> productList = productRepository.findProductByCompanyAndCategory(companyId, categoryId, pageable);
+
+        return productList.stream().map(p -> {
+            ProductDto productDto = new ProductDto();
+            productDto.setId(p.getId());
+            productDto.setName(p.getName());
+            productDto.setPrice(p.getPrice());
+            productDto.setDiscountValue(p.getDiscountValue());
+            productDto.setDiscountUnit(p.getDiscountUnit());
+            productDto.setImageLocation(p.getImageLocation());
+            return productDto;
+        }).collect(Collectors.toList());
     }
 }

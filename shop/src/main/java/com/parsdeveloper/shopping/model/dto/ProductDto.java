@@ -7,19 +7,18 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ProductDto implements Serializable {
 
     private Long id;
     private String name;
-    private Long imageId;
+
     private MultipartFile image;
     private String Description;
     private Long categoryId;
     private String categoryName;
     private String imageLocation;
-    private String imageName;
+
     private Product product;
     private Collection<ProductImage> productImageList;
     private List<String> imageLocationList;
@@ -30,14 +29,6 @@ public class ProductDto implements Serializable {
     public ProductDto() {
     }
 
-    public ProductDto(Long id,String name, Long price, Long discountValue, Long discountUnit, Long productImageId) {
-        //this.imageLocationList = productImageList.stream().map(ProductImage::getLocation).collect(Collectors.toList());
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.discountValue = discountValue;
-        this.discountUnit = discountUnit;
-    }
 
     public Long getId() {
         return id;
@@ -53,14 +44,6 @@ public class ProductDto implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(Long imageId) {
-        this.imageId = imageId;
     }
 
     public MultipartFile getImage() {
@@ -101,14 +84,6 @@ public class ProductDto implements Serializable {
 
     public void setImageLocation(String imageLocation) {
         this.imageLocation = imageLocation;
-    }
-
-    public String getImageName() {
-        return imageName;
-    }
-
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
     }
 
     public Collection<ProductImage> getProductImageList() {
