@@ -10,7 +10,6 @@ import com.parsdeveloper.shopping.repository.ProductRepository;
 import com.parsdeveloper.shopping.service.api.AWSS3Service;
 import com.parsdeveloper.shopping.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,15 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class DefaultProductService implements ProductService {
-
-//    @Value("${aws.s3.bucket}")
-//    private String bucketName;
 
     @Autowired
     ProductRepository productRepository;
@@ -69,10 +64,9 @@ public class DefaultProductService implements ProductService {
 
     @Override
     @Transactional
-    public List<ProductDto> findProductByCompanyAndCategory(Long companyId, Long categoryId, Pageable pageable) {
-        List<ProductRepository.ProductMapper> productList = productRepository.findProductByCompanyAndCategory(companyId, categoryId, pageable);
-
-        return productList.stream().map(p -> {
+    public Page<ProductDto> findProductByCompanyAndCategory(Long companyId, Long categoryId, Pageable pageable) {
+        Page<ProductRepository.ProductMapper> productList = productRepository.findProductByCompanyAndCategory(companyId, categoryId, pageable);
+        return productList.map(p -> {
             ProductDto productDto = new ProductDto();
             productDto.setId(p.getId());
             productDto.setName(p.getName());
@@ -81,6 +75,6 @@ public class DefaultProductService implements ProductService {
             productDto.setDiscountUnit(p.getDiscountUnit());
             productDto.setImageLocation(p.getImageLocation());
             return productDto;
-        }).collect(Collectors.toList());
+        });
     }
 }

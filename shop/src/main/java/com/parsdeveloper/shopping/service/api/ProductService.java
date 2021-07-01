@@ -13,5 +13,5 @@ public interface ProductService {
     Page<Product> findAll(Pageable pageable);
 
     Product save(ProductDto productDto) throws IOException;
-    List<ProductDto> findProductByCompanyAndCategory(Long companyId,Long CategoryId,Pageable pageable);
+    Page<ProductDto> findProductByCompanyAndCategory(Long companyId,Long CategoryId,Pageable pageable);
 }

@@ -13,8 +13,10 @@ public interface ProductRepository extends ApplicationRepository<Product> {
 
     Page<Product> findAll(Pageable pageable);
 
-    @Query(value = "select p.id,p.name,pp.price,pd.discount_value as discountValue,pd.discount_unit as discountUnit ,(select pi.location from product_image  pi where pi.product_id=p.id limit 1 ) as imageLocation from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId and ca.root_id=:categoryId", nativeQuery = true)
-    List<ProductMapper> findProductByCompanyAndCategory(@Param("companyId") Long companyId, @Param("categoryId") Long categoryId, Pageable pageable);
+    @Query(value = "select p.id,p.name,pp.price,pd.discount_value as discountValue,pd.discount_unit as discountUnit ,(select pi.location from product_image  pi where pi.product_id=p.id limit 1 ) as imageLocation from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId and ca.root_id=:categoryId",
+            nativeQuery = true,
+    countQuery = "select count(*) from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId and ca.root_id=:categoryId")
+    Page<ProductMapper> findProductByCompanyAndCategory(@Param("companyId") Long companyId, @Param("categoryId") Long categoryId, Pageable pageable);
 
     interface ProductMapper {
         Long getId();

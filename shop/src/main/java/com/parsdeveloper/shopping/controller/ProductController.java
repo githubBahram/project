@@ -42,9 +42,9 @@ public class ProductController {
     }
 
     @GetMapping("/products/companies/{companyId}/categories/{categoryId}")
-    public ResponseEntity<List<ProductDto>> findProductByCompanyAndCategory(@PathVariable Long categoryId, @PathVariable Long companyId) {
+    public ResponseEntity<Page<ProductDto>> findProductByCompanyAndCategory(@PathVariable Long categoryId, @PathVariable Long companyId) {
         Pageable pageable = PageRequest.of(1, 6);
-        List<ProductDto> productDtoList = productService.findProductByCompanyAndCategory(companyId, categoryId, pageable);
+        Page<ProductDto> productDtoList = productService.findProductByCompanyAndCategory(companyId, categoryId, pageable);
         return ResponseEntity.ok(productDtoList);
     }
 }
