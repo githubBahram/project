@@ -17,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DefaultProductService implements ProductService {
@@ -45,22 +48,29 @@ public class DefaultProductService implements ProductService {
     @Transactional
     public Product save(ProductDto productDto) throws IOException {
 
-        Optional<Category> category=categoryRepository.findById(productDto.getCategoryId());
+        Optional<Category> category = categoryRepository.findById(productDto.getCategoryId());
 
-        String imageName=awss3Service.uploadFile(productDto.getImage(),"image-product");
+        String imageName = awss3Service.uploadFile(productDto.getImage(), "image-product");
 
-        ProductImage productImage=new ProductImage();
+        ProductImage productImage = new ProductImage();
         productImage.setLocation("image-product");
         productImage.setName(imageName);
-        productImage=productImageRepository.save(productImage);
+        productImage = productImageRepository.save(productImage);
 
         Product product = new Product();
         product.setCategory(category.get());
 //        product.setImage(productImage);
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
-        product=productRepository.save(product);
+        product = productRepository.save(product);
 
         return product;
+    }
+
+    @Override
+    @Transactional
+    public List<ProductDto> findProductByCompanyAndCategory(Long companyId, Long categoryId, Pageable pageable) {
+        List<Object[]> productList = productRepository.findProductByCompanyAndCategory(companyId, categoryId, pageable);
+         return null;
     }
 }

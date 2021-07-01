@@ -2,23 +2,26 @@ package com.parsdeveloper.shopping.model.entity.shop;
 
 import com.parsdeveloper.shopping.model.entity.security.EffectiveModel;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.List;
 
+@Entity
+@Table(name = "company_product")
 public class CompanyProduct extends EffectiveModel<Long> {
 
     private Product product;
     private Company company;
+    private Integer count;
+    private List<ProductDiscount> productDiscountList;
+
 
     @Id
-    @Column(unique = true, nullable = false, precision = 19)
+    @GeneratedValue
     public Long getId() {
         return super.getId();
     }
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "product_id")
     public Product getProduct() {
         return product;
@@ -28,7 +31,7 @@ public class CompanyProduct extends EffectiveModel<Long> {
         this.product = product;
     }
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "company_id")
     public Company getCompany() {
         return company;
@@ -36,5 +39,22 @@ public class CompanyProduct extends EffectiveModel<Long> {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+    @Column
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    @OneToMany(mappedBy = "companyProduct")
+    public List<ProductDiscount> getProductDiscountList() {
+        return productDiscountList;
+    }
+
+    public void setProductDiscountList(List<ProductDiscount> productDiscountList) {
+        this.productDiscountList = productDiscountList;
     }
 }

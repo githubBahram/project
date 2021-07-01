@@ -14,6 +14,7 @@ public class CategoryDto implements Serializable {
     private Long parentId;
     private String description;
     private MultipartFile image;
+    private String imageLocation;
 
 
     public Long getId() {
@@ -66,7 +67,10 @@ public class CategoryDto implements Serializable {
 
     public CategoryDto map(Category category) {
         CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setImageId(category.getImage().getId());
+        if (category.getImage() != null) {
+            categoryDto.setImageId(category.getImage().getId());
+            categoryDto.setImageLocation(category.getImage().getLocation());
+        }
         categoryDto.setName(category.getName());
         categoryDto.setId(category.getId());
         categoryDto.setDescription(category.getDescription());
@@ -79,5 +83,13 @@ public class CategoryDto implements Serializable {
 
     public void setImage(MultipartFile image) {
         this.image = image;
+    }
+
+    public String getImageLocation() {
+        return imageLocation;
+    }
+
+    public void setImageLocation(String imageLocation) {
+        this.imageLocation = imageLocation;
     }
 }

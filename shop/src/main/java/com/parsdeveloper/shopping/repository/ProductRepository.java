@@ -1,11 +1,19 @@
 package com.parsdeveloper.shopping.repository;
 
+import com.parsdeveloper.shopping.model.dto.ProductDto;
 import com.parsdeveloper.shopping.model.entity.shop.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface ProductRepository extends ApplicationRepository<Product> {
 
     Page<Product> findAll(Pageable pageable);
+
+    @Query(value ="select p.id,p.name,pp.price,pd.discountValue,(select pi.location from product_image  pi where pi.product_id=p.id limit 1 ) as location from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId and ca.root_id=:categoryId",nativeQuery = true)
+    List<Object[]> findProductByCompanyAndCategory(@Param("companyId") Long companyId, @Param("categoryId") Long categoryId, Pageable pageable);
 
 }

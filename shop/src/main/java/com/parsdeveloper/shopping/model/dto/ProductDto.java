@@ -1,9 +1,13 @@
 package com.parsdeveloper.shopping.model.dto;
 
 import com.parsdeveloper.shopping.model.entity.shop.Product;
+import com.parsdeveloper.shopping.model.entity.shop.ProductImage;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductDto implements Serializable {
 
@@ -16,6 +20,24 @@ public class ProductDto implements Serializable {
     private String categoryName;
     private String imageLocation;
     private String imageName;
+    private Product product;
+    private Collection<ProductImage> productImageList;
+    private List<String> imageLocationList;
+    private Long price;
+    private Long discountValue;
+    private Long discountUnit;
+
+    public ProductDto() {
+    }
+
+    public ProductDto(Long id,String name, Long price, Long discountValue, Long discountUnit, Long productImageId) {
+        //this.imageLocationList = productImageList.stream().map(ProductImage::getLocation).collect(Collectors.toList());
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.discountValue = discountValue;
+        this.discountUnit = discountUnit;
+    }
 
     public Long getId() {
         return id;
@@ -87,6 +109,54 @@ public class ProductDto implements Serializable {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public Collection<ProductImage> getProductImageList() {
+        return productImageList;
+    }
+
+    public void setProductImageList(Collection<ProductImage> productImageList) {
+        this.productImageList = productImageList;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public List<String> getImageLocationList() {
+        return imageLocationList;
+    }
+
+    public void setImageLocationList(List<String> imageLocationList) {
+        this.imageLocationList = imageLocationList;
+    }
+
+    public Long getDiscountValue() {
+        return discountValue;
+    }
+
+    public void setDiscountValue(Long discountValue) {
+        this.discountValue = discountValue;
+    }
+
+    public Long getDiscountUnit() {
+        return discountUnit;
+    }
+
+    public void setDiscountUnit(Long discountUnit) {
+        this.discountUnit = discountUnit;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     public ProductDto map(Product product) {

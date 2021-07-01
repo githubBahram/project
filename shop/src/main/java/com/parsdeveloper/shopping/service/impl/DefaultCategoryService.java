@@ -16,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DefaultCategoryService implements CategoryService {
@@ -41,15 +43,15 @@ public class DefaultCategoryService implements CategoryService {
     @Transactional
     public Category save(CategoryDto categoryDto) throws IOException {
 
-        Optional<Category> root=categoryRepository.findById(categoryDto.getRootId()==null?-1L:categoryDto.getRootId());
-        Optional<Category> parent=categoryRepository.findById(categoryDto.getParentId()==null?-1L:categoryDto.getParentId());
+        Optional<Category> root = categoryRepository.findById(categoryDto.getRootId() == null ? -1L : categoryDto.getRootId());
+        Optional<Category> parent = categoryRepository.findById(categoryDto.getParentId() == null ? -1L : categoryDto.getParentId());
 
-        String imageName=awss3Service.uploadFile(categoryDto.getImage(),"image-product");
+        String imageName = awss3Service.uploadFile(categoryDto.getImage(), "image-product");
 
-        CategoryImage categoryImage=new CategoryImage();
+        CategoryImage categoryImage = new CategoryImage();
         categoryImage.setLocation("image-product");
         categoryImage.setName(imageName);
-        categoryImage=categoryImageRepository.save(categoryImage);
+        categoryImage = categoryImageRepository.save(categoryImage);
 
         Category category = new Category();
         category.setRoot(root.orElse(null));
@@ -57,15 +59,22 @@ public class DefaultCategoryService implements CategoryService {
         category.setImage(categoryImage);
         category.setName(categoryDto.getName());
         category.setDescription(categoryDto.getDescription());
-        category=categoryRepository.save(category);
+        category = categoryRepository.save(category);
 
-        if(category.getRoot()==null){
+        if (category.getRoot() == null) {
             category.setRoot(category);
         }
-        if (category.getParent()==null){
+        if (category.getParent() == null) {
             category.setParent(category);
         }
 
         return categoryRepository.save(category);
+    }
+
+    @Override
+    public List<CategoryDto> findRootCategories(Long companyId) {
+        List<Category> categoryList = categoryRepository.findRootCategoriesByCompany(companyId);
+        return categoryList.stream().map(c -> new CategoryDto().map(c)).collect(Collectors.toList());
+
     }
 }

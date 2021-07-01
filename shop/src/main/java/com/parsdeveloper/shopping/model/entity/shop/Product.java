@@ -17,6 +17,7 @@ public class Product  implements Serializable {
     private Category category;
     private Brand brand;
 
+
     @Id
     @GeneratedValue
     public Long getId() {
@@ -92,4 +93,6 @@ public class Product  implements Serializable {
     public void setBrand(Brand brand) {
         this.brand = brand;
     }
+
+
 }

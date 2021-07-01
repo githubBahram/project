@@ -61,13 +61,14 @@ public class ImportDataFromExcelService implements ImportDataService {
         List<ProductExcelDto> productExcelDtoList = new ArrayList<>();
 
         try {
-            File file = ResourceUtils.getFile("classpath:nush.xlsx");
+//            File file = ResourceUtils.getFile("classpath:nush.xlsx");
+            File file = new File("/home/bahram/Documents/doc/product info/V01-Update-02/protein.xlsx");
             excelFile = new FileInputStream(file);
 
             Workbook wb = WorkbookFactory.create(excelFile);
             Sheet sheet = wb.getSheetAt(0);
             for (Row row : sheet) {
-                if (row.getRowNum() == 0) {
+                if (row.getRowNum()  <1900) {
                     continue;
                 }
                 if (count == 0L) {
@@ -81,8 +82,11 @@ public class ImportDataFromExcelService implements ImportDataService {
                 } catch (Throwable e) {
                     continue;
                 }
-
-                if (count == 100L) {
+                System.out.println("-----------row number------------");
+                System.out.println(row.getRowNum());
+                if (count == 100L ||   row.getRowNum()==1982) {
+                    System.out.println("-----------start row number commit------------");
+                    System.out.println(row.getRowNum());
                     count = importDataService.saveData(productExcelDtoList);
                 }
             }
@@ -186,7 +190,7 @@ public class ImportDataFromExcelService implements ImportDataService {
         }
         String fileUploadName;
         try {
-            File file = new File("D:\\shop1\\shop\\src\\main\\resources\\" + fileName);
+            File file = new File("/home/bahram/Documents/doc/product info/V01-Update-02/protein/Pic/" + fileName);
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = new MockMultipartFile("file",
                     file.getName(), "jpg/plain", IOUtils.toByteArray(input));
@@ -204,7 +208,7 @@ public class ImportDataFromExcelService implements ImportDataService {
         }
         String fileUploadName;
         try {
-            File file = new File("D:\\shop1\\shop\\src\\main\\resources\\" + fileName);
+            File file = new File("/home/bahram/Documents/doc/product info/V01-Update-02/protein/Pic/" + fileName);
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = FileUtils.createImageThumbnail(file, 300);
             fileUploadName = awss3Service.uploadFile(multipartFile, "image-product-thumbnail", uploadName);

@@ -13,6 +13,7 @@ public class ProductPricing extends EffectiveModel<Long> {
     private Boolean inActive;
     private CompanyProduct companyProduct;
 
+
     @Id
     @GeneratedValue
     public Long getId() {
@@ -55,4 +56,6 @@ public class ProductPricing extends EffectiveModel<Long> {
     public void setCompanyProduct(CompanyProduct companyProduct) {
         this.companyProduct = companyProduct;
     }
+
+
 }
