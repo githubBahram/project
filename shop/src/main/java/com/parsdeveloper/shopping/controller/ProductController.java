@@ -2,6 +2,7 @@ package com.parsdeveloper.shopping.controller;
 
 import com.parsdeveloper.shopping.model.dto.ProductDto;
 import com.parsdeveloper.shopping.model.entity.shop.Product;
+import com.parsdeveloper.shopping.model.filter.ProductFilter;
 import com.parsdeveloper.shopping.service.api.ImportDataService;
 import com.parsdeveloper.shopping.service.api.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,16 @@ public class ProductController {
     }
 
     @GetMapping("/products/companies/{companyId}/categories/{categoryId}")
-    public ResponseEntity<Page<ProductDto>> findProductByCompanyAndCategory(@PathVariable Long categoryId, @PathVariable Long companyId) {
-        Pageable pageable = PageRequest.of(1, 6);
-        Page<ProductDto> productDtoList = productService.findProductByCompanyAndCategory(companyId, categoryId, pageable);
+    public ResponseEntity<Page<ProductDto>> findProductByCompanyAndCategory(@PathVariable Long categoryId, @PathVariable Long companyId, ProductFilter productFilter) {
+        Page<ProductDto> productDtoList = productService.findProductByCompanyAndCategory(companyId, categoryId, productFilter);
         return ResponseEntity.ok(productDtoList);
+    }
+
+    @GetMapping("/products/companies/{companyId}")
+    public ResponseEntity<Page<ProductDto>> findByCompanyId(@PathVariable Long companyId) {
+        ProductFilter productFilter = new ProductFilter();
+        productFilter.setCompanyId(companyId);
+        Page<ProductDto> productDtoPage = productService.findProductByCategory(productFilter);
+        return ResponseEntity.ok(productDtoPage);
     }
 }
