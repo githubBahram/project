@@ -26,6 +26,9 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     @Value("${application.max.page.size}")
     Integer maxPageSize;
 
+    @Value("${image.thumbnail.store.location}")
+    String imageThumbnailLocation;
+
     @Override
     public Page<ProductDto> finaProduct(ProductFilter productFilter) {
         StringBuilder queryBuilder = new StringBuilder();
@@ -61,12 +64,12 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
         List<ProductDto> productDtoList = result.stream().map(p -> {
             ProductDto productDto = new ProductDto();
-            productDto.setId(((BigInteger)p[0]).longValue());
+            productDto.setId(((BigInteger) p[0]).longValue());
             productDto.setName(String.valueOf(p[1]));
             productDto.setPrice(((BigInteger) p[2]).longValue());
             productDto.setDiscountValue((p[3] != null ? ((BigInteger) p[3]).longValue() : null));
             productDto.setDiscountUnit((p[4] != null ? ((BigInteger) p[4]).longValue() : null));
-            productDto.setImageLocation((String) p[5]);
+            productDto.setImageLocation(imageThumbnailLocation + p[5]);
             return productDto;
         }).collect(Collectors.toList());
 
