@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -16,6 +17,7 @@ public class Category  implements Serializable {
     private Category root;
     private Category parent;
     private String description;
+    private List<Category> childes;
 
     @Id
     @GeneratedValue
@@ -86,4 +88,12 @@ public class Category  implements Serializable {
         this.description = description;
     }
 
+    @OneToMany(mappedBy = "parent")
+    public List<Category> getChildCategory() {
+        return childes;
+    }
+
+    public void setChildCategory(List<Category> childCategory) {
+        this.childes = childCategory;
+    }
 }

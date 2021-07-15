@@ -29,4 +29,10 @@ public class BrandController {
         Brand brand= brandService.save(brandDto);
         return ResponseEntity.ok(brand);
     }
+
+//    @GetMapping("brands/{categoryId}/{companyId}")
+//    public ResponseEntity<Brand> getBrands(BrandDto brandDto){
+//        Brand brand= brandService.save(brandDto);
+//        return ResponseEntity.ok(brand);
+//    }
 }

@@ -14,5 +14,8 @@ public interface CategoryService {
     Page<Category> findAll(Pageable pageable);
 
     Category save(CategoryDto categoryDto) throws IOException;
+
     List<CategoryDto> findRootCategories(Long companyId);
+
+    List<CategoryDto> findChildesCategory(Long categoryId);
 }

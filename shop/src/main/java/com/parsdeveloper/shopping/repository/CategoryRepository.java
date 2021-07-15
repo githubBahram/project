@@ -17,4 +17,5 @@ public interface CategoryRepository extends ApplicationRepository<Category> {
 
     @Query("select ca from Company c join c.categories ca where ca.id=ca.root.id and c.id=:companyId")
     List<Category> findRootCategoriesByCompany(@Param("companyId") Long companyId);
+
 }

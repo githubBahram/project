@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,4 +37,16 @@ public class CategoryController {
         List<CategoryDto> categoryDtoList = categoryService.findRootCategories(companyId);
         return ResponseEntity.ok(categoryDtoList);
     }
+
+    @GetMapping("/category/childes/{categoryId}")
+    public ResponseEntity<List<CategoryDto>> getChildesCategory(@PathVariable("categoryId") Long categoryId) {
+        List<CategoryDto> categoryDtoList = categoryService.findChildesCategory(categoryId);
+        return ResponseEntity.ok(categoryDtoList);
+    }
+
+//    @GetMapping("/categories/{str}")
+//    public ResponseEntity<List<Category>> getStrCategories(@RequestParam("companyId") Long companyId) {
+//        List<Category> categoryDtoList = new ArrayList<>();// categoryService.findRootCategories(categoryId);
+//        return ResponseEntity.ok(categoryDtoList);
+//    }
 }
