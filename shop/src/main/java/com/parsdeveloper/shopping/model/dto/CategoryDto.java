@@ -4,6 +4,7 @@ import com.parsdeveloper.shopping.model.entity.shop.Category;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CategoryDto implements Serializable {
 
@@ -15,6 +16,7 @@ public class CategoryDto implements Serializable {
     private String description;
     private MultipartFile image;
     private String imageLocation;
+    private List<CategoryDto> categoryDtoList;
 
 
     public Long getId() {
@@ -91,5 +93,13 @@ public class CategoryDto implements Serializable {
 
     public void setImageLocation(String imageLocation) {
         this.imageLocation = imageLocation;
+    }
+
+    public List<CategoryDto> getCategoryDtoList() {
+        return categoryDtoList;
+    }
+
+    public void setCategoryDtoList(List<CategoryDto> categoryDtoList) {
+        this.categoryDtoList = categoryDtoList;
     }
 }

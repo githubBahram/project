@@ -17,5 +17,5 @@ public interface CategoryService {
 
     List<CategoryDto> findRootCategories(Long companyId);
 
-    List<CategoryDto> findChildesCategory(Long categoryId);
+    CategoryDto findChildesCategory(Long categoryId);
 }

@@ -38,9 +38,9 @@ public class CategoryController {
         return ResponseEntity.ok(categoryDtoList);
     }
 
-    @GetMapping("/category/childes/{categoryId}")
-    public ResponseEntity<List<CategoryDto>> getChildesCategory(@PathVariable("categoryId") Long categoryId) {
-        List<CategoryDto> categoryDtoList = categoryService.findChildesCategory(categoryId);
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<CategoryDto> getChildesCategory(@PathVariable("categoryId") Long categoryId) {
+        CategoryDto categoryDtoList = categoryService.findChildesCategory(categoryId);
         return ResponseEntity.ok(categoryDtoList);
     }
 

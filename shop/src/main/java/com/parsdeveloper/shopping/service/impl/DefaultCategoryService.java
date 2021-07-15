@@ -80,9 +80,12 @@ public class DefaultCategoryService implements CategoryService {
 
 
     @Override
-    public List<CategoryDto> findChildesCategory(Long categoryId) {
-        List<Category> categoryList = categoryRepository.findById(categoryId).get().getChildCategory();
-        return categoryList.stream().map(c -> new CategoryDto().map(c)).collect(Collectors.toList());
+    public CategoryDto findChildesCategory(Long categoryId) {
+        Category category=categoryRepository.findById(categoryId).get();
+        CategoryDto categoryDto=new CategoryDto().map(category);
+        List<Category> categoryList = category.getChildCategory();
+        categoryDto.setCategoryDtoList(categoryList.stream().map(c -> new CategoryDto().map(c)).collect(Collectors.toList()));
+        return categoryDto;
 
     }
 }

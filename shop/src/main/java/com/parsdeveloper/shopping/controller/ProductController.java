@@ -5,6 +5,7 @@ import com.parsdeveloper.shopping.model.entity.shop.Product;
 import com.parsdeveloper.shopping.model.filter.ProductFilter;
 import com.parsdeveloper.shopping.service.api.ImportDataService;
 import com.parsdeveloper.shopping.service.api.ProductService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ public class ProductController {
     @Autowired
     ImportDataService importDataService;
 
+    @ApiOperation(value = "get all products", httpMethod = "GET")
     @GetMapping("/products")
     protected ResponseEntity findAll(Pageable pageable) {
         Page<Product> all = productService.findAll(pageable);
