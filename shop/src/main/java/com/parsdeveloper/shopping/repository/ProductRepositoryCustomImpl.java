@@ -34,14 +34,23 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         StringBuilder queryBuilder = new StringBuilder();
         StringBuilder countQueryBuilder = new StringBuilder();
 
-        queryBuilder.append("select p.id,p.name,pp.price,pd.discount_value as discountValue,pd.discount_unit as discountUnit ,(select pi.location from product_image  pi where pi.product_id=p.id limit 1 ) as imageLocation from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join brand b on p.brand_id=b.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId and ca.root_id=:categoryId ");
-        countQueryBuilder.append("select count(*) from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join brand b on p.brand_id=b.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId and ca.root_id=:categoryId ");
+        queryBuilder.append("select p.id,p.name,pp.price,pd.discount_value as discountValue,pd.discount_unit as discountUnit ,(select pi.location from product_image  pi where pi.product_id=p.id limit 1 ) as imageLocation from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join brand b on p.brand_id=b.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId ");
+        countQueryBuilder.append("select count(*) from product_pricing pp inner join company_product cp on pp.company_product_id=cp.id inner join product p on cp.id=p.id inner join brand b on p.brand_id=b.id inner join category ca on p.category_id=ca.id left outer join product_discount pd on cp.id=pd.company_product_id where cp.company_id=:companyId ");
 
         Integer pageSize = productFilter.getPageSize() > maxPageSize ? maxPageSize : productFilter.getPageSize();
 
         if (productFilter.getBrandId() != null) {
             queryBuilder.append("and b.id=:brandId").append(" ");
             countQueryBuilder.append("and b.id=:brandId").append(" ");
+        }
+
+        if (productFilter.getRootCategory()){
+            queryBuilder.append("and ca.root_id=:categoryId");
+            countQueryBuilder.append("and ca.root_id=:categoryId").append(" ");
+        }
+        else {
+            queryBuilder.append("and ca.id=:categoryId");
+            countQueryBuilder.append("and ca.id=:categoryId").append(" ");
         }
 
         Query query = em.createNativeQuery(queryBuilder.toString())
@@ -74,7 +83,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         }).collect(Collectors.toList());
 
         Pageable pageable=PageRequest.of(productFilter.getPageNumber(),pageSize);
-        long total = Long.parseLong(resultCount.get(0)[0].toString());
+        long total = 10;//((BigInteger)resultCount.get(0)[0]).longValue();
 
         return new PageImpl<>(productDtoList,pageable, total);
     }

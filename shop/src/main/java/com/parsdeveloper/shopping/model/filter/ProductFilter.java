@@ -7,6 +7,7 @@ public class ProductFilter {
     private Long companyId;
     private Long categoryId;
     private Boolean hasDiscountValue;
+    private Boolean rootCategory=false;
 
     public Integer getPageNumber() {
         return pageNumber;
@@ -54,5 +55,13 @@ public class ProductFilter {
 
     public void setHasDiscountValue(Boolean hasDiscountValue) {
         this.hasDiscountValue = hasDiscountValue;
+    }
+
+    public Boolean getRootCategory() {
+        return rootCategory;
+    }
+
+    public void setRootCategory(Boolean rootCategory) {
+        this.rootCategory = rootCategory;
     }
 }

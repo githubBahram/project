@@ -20,12 +20,6 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/categories")
-    protected ResponseEntity findAll(Pageable pageable) {
-        Page<Category> all = categoryService.findAll(pageable);
-        return ResponseEntity.ok(all);
-    }
-
     @PostMapping("/category")
     public ResponseEntity<Category> save(CategoryDto categoryDto) throws IOException {
         Category category = categoryService.save(categoryDto);
