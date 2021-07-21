@@ -5,10 +5,7 @@ import com.parsdeveloper.shopping.model.entity.shop.Brand;
 import com.parsdeveloper.shopping.service.api.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,14 +22,16 @@ public class BrandController {
     }
 
     @PostMapping("/brand")
-    public ResponseEntity<Brand> save(BrandDto brandDto){
-        Brand brand= brandService.save(brandDto);
+    public ResponseEntity<Brand> save(BrandDto brandDto) {
+        Brand brand = brandService.save(brandDto);
         return ResponseEntity.ok(brand);
     }
 
-//    @GetMapping("brands/{categoryId}/{companyId}")
-//    public ResponseEntity<Brand> getBrands(BrandDto brandDto){
-//        Brand brand= brandService.save(brandDto);
-//        return ResponseEntity.ok(brand);
-//    }
+    @GetMapping("/brands/categories/{categoryId}/companies/{companyId}")
+    public ResponseEntity<List<BrandDto>> getBrands(@PathVariable("categoryId") Long categoryId,
+                                                    @PathVariable("companyId") Long companyId) {
+
+        List<BrandDto> brandDtoList = brandService.getBrandByCategoryAndCompany(categoryId, companyId);
+        return ResponseEntity.ok(brandDtoList);
+    }
 }

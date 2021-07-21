@@ -11,4 +11,5 @@ public interface BrandService {
     List<BrandDto> fetchAllBrands();
 
     Brand save(BrandDto brandDto);
+    List<BrandDto> getBrandByCategoryAndCompany(Long categoryId,Long companyId);
 }

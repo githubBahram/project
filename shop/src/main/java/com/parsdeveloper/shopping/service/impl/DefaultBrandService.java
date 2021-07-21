@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DefaultBrandService implements BrandService {
@@ -40,17 +41,31 @@ public class DefaultBrandService implements BrandService {
     @Transactional
     public Brand save(BrandDto brandDto) {
 
-        String imageName=awss3Service.uploadFile(brandDto.getImage(),"image-product");
+        String imageName = awss3Service.uploadFile(brandDto.getImage(), "image-product");
 
-        BrandImage brandImage=new BrandImage();
+        BrandImage brandImage = new BrandImage();
         brandImage.setLocation("image-product");
         brandImage.setName(imageName);
-        brandImage=brandImageRepository.save(brandImage);
+        brandImage = brandImageRepository.save(brandImage);
 
-        Brand brand=new Brand();
+        Brand brand = new Brand();
         brand.setName(brandDto.getName());
         brand.setImage(brandImage);
         return brandRepository.save(brand);
+    }
+
+    @Override
+    @Transactional
+    public List<BrandDto> getBrandByCategoryAndCompany(Long categoryId, Long companyId) {
+
+        List<Brand> brandList = brandRepository.findBrandByCategoryAndCompany(categoryId, companyId);
+
+        return brandList.stream().map(brand -> {
+            BrandDto brandDto = new BrandDto();
+            brandDto.setId(brand.getId());
+            brandDto.setName(brand.getName());
+            return brandDto;
+        }).collect(Collectors.toList());
     }
 
 }

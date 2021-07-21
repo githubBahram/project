@@ -9,6 +9,9 @@ public class BrandDto {
     private Long imageId;
     private MultipartFile image;
 
+    public BrandDto() {
+    }
+
     public BrandDto(Long id, String name, String imageUrl) {
         this.id = id;
         this.name = name;
