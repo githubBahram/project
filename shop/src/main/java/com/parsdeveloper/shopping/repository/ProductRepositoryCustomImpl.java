@@ -39,16 +39,15 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
         Integer pageSize = productFilter.getPageSize() > maxPageSize ? maxPageSize : productFilter.getPageSize();
 
-        if (productFilter.getBrandId() != null) {
-            queryBuilder.append("and b.id=:brandId").append(" ");
-            countQueryBuilder.append("and b.id=:brandId").append(" ");
+        if (productFilter.getBrands() != null && !productFilter.getBrands().isEmpty()) {
+            queryBuilder.append("and b.id in(:brandId)").append(" ");
+            countQueryBuilder.append("and b.id in(:brandId)").append(" ");
         }
 
-        if (productFilter.getRootCategory()){
+        if (productFilter.getRootCategory()) {
             queryBuilder.append("and ca.root_id=:categoryId");
             countQueryBuilder.append("and ca.root_id=:categoryId").append(" ");
-        }
-        else {
+        } else {
             queryBuilder.append("and ca.id=:categoryId");
             countQueryBuilder.append("and ca.id=:categoryId").append(" ");
         }
@@ -60,9 +59,9 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                 .setParameter("companyId", productFilter.getCompanyId())
                 .setParameter("categoryId", productFilter.getCategoryId());
 
-        if (productFilter.getBrandId() != null) {
-            query.setParameter("brandId", productFilter.getBrandId());
-            queryCount.setParameter("brandId", productFilter.getBrandId());
+        if (productFilter.getBrands() != null && !productFilter.getBrands().isEmpty()) {
+            query.setParameter("brandId", productFilter.getBrands());
+            queryCount.setParameter("brandId", productFilter.getBrands());
         }
 
         query.setFirstResult(productFilter.getPageNumber());
@@ -82,9 +81,9 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
             return productDto;
         }).collect(Collectors.toList());
 
-        Pageable pageable=PageRequest.of(productFilter.getPageNumber(),pageSize);
+        Pageable pageable = PageRequest.of(productFilter.getPageNumber(), pageSize);
         long total = 10;//((BigInteger)resultCount.get(0)[0]).longValue();
 
-        return new PageImpl<>(productDtoList,pageable, total);
+        return new PageImpl<>(productDtoList, pageable, total);
     }
 }

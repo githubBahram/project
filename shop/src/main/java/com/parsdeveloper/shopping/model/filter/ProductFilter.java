@@ -1,13 +1,15 @@
 package com.parsdeveloper.shopping.model.filter;
 
+import java.util.List;
+
 public class ProductFilter {
-    private Integer pageNumber=1;
-    private Integer pageSize=20;
-    private Long brandId;
+    private Integer pageNumber = 1;
+    private Integer pageSize = 20;
+    private List<Long> brands;
     private Long companyId;
     private Long categoryId;
     private Boolean hasDiscountValue;
-    private Boolean rootCategory=false;
+    private Boolean rootCategory = false;
 
     public Integer getPageNumber() {
         return pageNumber;
@@ -25,12 +27,12 @@ public class ProductFilter {
         this.pageSize = pageSize;
     }
 
-    public Long getBrandId() {
-        return brandId;
+    public List<Long> getBrands() {
+        return brands;
     }
 
-    public void setBrandId(Long brandId) {
-        this.brandId = brandId;
+    public void setBrands(List<Long> brands) {
+        this.brands = brands;
     }
 
     public Long getCompanyId() {
